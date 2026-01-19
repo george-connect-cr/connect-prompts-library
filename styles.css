@@ -134,4 +134,149 @@ body{
   padding: 10px 10px;
   border-radius: 12px;
   border: 1px solid var(--border);
-  background: va
+  background: var(--card);
+  color: var(--text);
+}
+
+.sideHint{
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px dashed var(--border);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.content{display:flex; flex-direction:column; gap:14px}
+.hero{
+  background: radial-gradient(1200px 400px at 20% 0%, color-mix(in oklab, var(--primary) 18%, transparent), transparent),
+              var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+.hero h1{margin:0 0 6px 0}
+.hero p{margin:0; color: var(--muted); line-height:1.45}
+.chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px}
+.chip{
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--card) 70%, transparent);
+  padding: 8px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  cursor:pointer;
+}
+.chip:hover{border-color: color-mix(in oklab, var(--primary) 55%, transparent)}
+
+.metaRow{display:flex; justify-content:space-between; align-items:center}
+.count{color: var(--muted); font-size:13px}
+.smallNote{color: var(--muted); font-size:12px}
+
+.grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.card{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: var(--shadow);
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+  min-height: 150px;
+}
+.cardTop{display:flex; justify-content:space-between; gap:10px; align-items:flex-start}
+.cardTitle{font-weight:900; line-height:1.1}
+.badge{
+  font-size: 11px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.cardMeta{display:flex; flex-wrap:wrap; gap:6px}
+.tag{
+  font-size: 11px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--panel) 70%, transparent);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.cardBottom{display:flex; justify-content:space-between; align-items:center; margin-top:auto}
+.linkBtn{background: transparent; border: 1px solid var(--border); color: var(--text); padding: 8px 10px; border-radius: 999px; cursor:pointer; font-weight:800}
+.linkBtn:hover{border-color: color-mix(in oklab, var(--primary) 55%, transparent)}
+
+.modal{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  display:grid;
+  place-items:center;
+  padding: 16px;
+}
+.hidden{display:none}
+.modalCard{
+  width: min(980px, 96vw);
+  max-height: 90vh;
+  overflow:auto;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  padding: 14px;
+}
+.modalHead{display:flex; justify-content:space-between; align-items:flex-start; gap:12px}
+.modalTitle{font-weight: 950; font-size: 18px}
+.modalMeta{color: var(--muted); font-size: 12px; margin-top:6px}
+
+.tabs{display:flex; gap:8px; margin-top:12px}
+.tab{
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: 999px;
+  cursor:pointer;
+  font-weight: 850;
+}
+.tab.active{border-color: color-mix(in oklab, var(--primary) 55%, transparent); background: color-mix(in oklab, var(--primary) 10%, transparent)}
+
+.actions{display:flex; gap:10px; margin: 12px 0}
+.pre{
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.45;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--card) 75%, transparent);
+  white-space: pre-wrap;
+}
+.vars{margin-top:12px}
+.varsTitle{font-weight:900; font-size:12px; color: var(--muted); margin-bottom:8px}
+.varsList{display:flex; flex-wrap:wrap; gap:8px}
+.varItem{
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+}
+.notes{color: var(--muted); line-height:1.5; padding: 8px}
+
+@media (max-width: 1100px){
+  .grid{grid-template-columns: repeat(2, minmax(0, 1fr))}
+}
+@media (max-width: 860px){
+  .shell{grid-template-columns: 1fr}
+  .sidebar{position: static; height:auto}
+  .grid{grid-template-columns: 1fr}
+}
