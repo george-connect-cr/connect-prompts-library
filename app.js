@@ -494,6 +494,14 @@ function openGuide(open){
   m.hidden = !open;
 }
 
+window.openGuide = openGuide;
+
+// delegated close (robust)
+document.addEventListener('click', (e)=>{
+  const btn = e.target.closest && e.target.closest('#btnGuideClose');
+  if(btn){ e.preventDefault(); openGuide(false); }
+});
+
 function exportFiltered() {
   const payload = {
     meta: {
