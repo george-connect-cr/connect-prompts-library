@@ -428,6 +428,8 @@ a{color:inherit}
 
 /* Modal */
 .modal{
+  background: rgba(0,0,0,.45);
+
   position:fixed;
   inset:0;
   z-index:80;
@@ -464,3 +466,14 @@ a{color:inherit}
 .guide__k{font-weight:950}
 .guide__v{color: var(--muted); margin-top:6px}
 .steps{margin:0; padding-left:18px; color: var(--muted); line-height:1.6}
+
+
+/* Modal button overrides (close should not inherit topbar ghost style) */
+.modal .btn--ghost{
+  color: var(--ink);
+  border-color: var(--border);
+  background: transparent;
+}
+.modal .btn--ghost:hover{
+  background: rgba(16,24,40,.06);
+}

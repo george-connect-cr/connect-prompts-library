@@ -594,7 +594,7 @@ function bindEvents() {
 
   $('#btnGuide').addEventListener('click', ()=>openGuide(true));
   $('#btnGuideClose').addEventListener('click', ()=>openGuide(false));
-  $('#guideModal').addEventListener('click', (e)=>{ if(e.target.id==='guideModal') openGuide(false); });
+  $('#guideModal').addEventListener('click', (e)=>{ if(e.target.id==='guideModal' || e.target.classList.contains('modal')) openGuide(false); });
 
   $('#btnExport').addEventListener('click', exportFiltered);
 }
