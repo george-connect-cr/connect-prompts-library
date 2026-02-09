@@ -1,221 +1,171 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="light dark" />
-  <title>Connect | Librería de Prompts IA</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connect · Prompt Library</title>
+  <meta name="description" content="Repositorio interno de prompts para Connect. Encuentra y copia prompts en segundos." />
+  <link rel="preconnect" href="https://cdn.prod.website-files.com" crossorigin>
+  <link rel="stylesheet" href="./styles.css" />
 </head>
-<body>
-  <a class="skip" href="#main">Saltar al contenido</a>
 
+<body>
   <header class="topbar">
     <div class="topbar__inner">
-      
-      <div class="brand">
-        <img class="brand__logo" src="https://cdn.prod.website-files.com/64b580afe0544a5492bb37b7/64b580afe0544a5492bb389f_logo-completo.svg" alt="Connect" />
-        <div class="brand__text">
-          <div class="brand__name">Prompt Library</div>
-          <div class="brand__sub" data-i18n="sub">Asistencia extraordinaria</div>
+      <div class="brand" role="banner" aria-label="Connect Prompt Library">
+        <img
+          class="brand__logo"
+          src="https://cdn.prod.website-files.com/64b580afe0544a5492bb37b7/64b580afe0544a5492bb389f_logo-completo.svg"
+          alt="Connect"
+        />
+        <div class="brand__meta">
+          <div class="brand__title">Prompt Library</div>
+          <div class="brand__sub">Asistencia extraordinaria</div>
         </div>
       </div>
-    </div>
 
-      <nav class="topbar__actions aria-label="Acciones">
-        <button class="btn btn--ghost" id="btnGuide" type="button" data-i18n="guide">Guía</button>
-        <button class="btn btn--ghost" id="btnFavorites" type="button" data-i18n="favorites">Favoritos</button>
-        <div class="divider" aria-hidden="true"></div>
-
-        <button class="btn btn--ghost" id="btnLang" type="button" aria-label="Cambiar idioma">
-          <span class="pill" id="langPill">ES</span>
-          <span class="muted" data-i18n="lang">Idioma</span>
+      <div class="topbar__actions">
+        <button class="iconbtn" id="btnFavorites" type="button" aria-label="Ver favoritos">
+          ⭐ <span class="hide-sm">Favoritos</span>
         </button>
-
-        <button class="btn btn--ghost" id="btnTheme" type="button" aria-label="Cambiar tema">
-          <span class="pill" id="themePill">☀︎</span>
-          <span class="muted" data-i18n="theme">Tema</span>
+        <button class="iconbtn" id="btnTheme" type="button" aria-label="Cambiar tema">
+          🌗 <span class="hide-sm">Tema</span>
         </button>
-      </nav>
+      </div>
     </div>
   </header>
 
-  <section class="hero" aria-label="Búsqueda">
-    <div class="hero__inner">
-      <div class="hero__left">
-        <h1 class="h1" data-i18n="title">Librería de Prompts IA</h1>
-        <p class="lead" data-i18n="lead">
-          Encuentra prompts listos para usar. Optimizados con el marco <strong>T‑C‑R‑E‑I</strong> (Tarea, Contexto, Reglas, Ejemplo, Inputs).
-        </p>
-      </div>
-      <div class="hero__right">
-        <div class="search">
-          <label class="sr-only" for="q" data-i18n="searchLabel">Buscar</label>
-          <input id="q" type="search" placeholder="Buscar: informe, correo, proveedores, incidentes…" autocomplete="off" />
-          <button class="btn btn--primary" id="btnClear" type="button" data-i18n="clear">Limpiar</button>
-        </div>
+  <main class="page" id="pageList">
+    <section class="hero" aria-label="Búsqueda principal">
+      <h1 class="hero__title">¿Qué necesitas hacer hoy?</h1>
 
-        <div class="filters" role="group" aria-label="Filtros">
-          <select id="categorySelect" aria-label="Categoría"></select>
-          <select id="complexitySelect" aria-label="Complejidad"></select>
-          <select id="tagSelect" aria-label="Etiqueta"></select>
-          <div class="hint" data-i18n="hint">Tip: abre un prompt y copia con un click. Guarda favoritos.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <main id="main" class="layout">
-    <aside class="sidebar" aria-label="Categorías">
-      <div class="sidebar__card">
-        <div class="sidebar__header">
-          <div class="kicker" data-i18n="browse">Explorar</div>
-          <div class="sidebar__meta" id="countMeta">—</div>
-        </div>
-        <div class="sidebar__list" id="categoryList"></div>
+      <div class="searchRow">
+        <input
+          id="q"
+          class="searchInput"
+          type="search"
+          placeholder="Buscar: correo, informe, proveedor, incidente, QA, Helios…"
+          autocomplete="off"
+        />
+        <button class="btn btn--primary" id="btnClear" type="button">Limpiar</button>
       </div>
 
-      <div class="sidebar__card">
-        <div class="sidebar__header">
-          <div class="kicker" data-i18n="recent">Recientes</div>
-          <button class="link" id="btnClearRecent" type="button" data-i18n="clear">Limpiar</button>
-        </div>
-        <div class="sidebar__recent" id="recentList"></div>
+      <div class="chipRow" aria-label="Atajos">
+        <button class="chip" data-task="Correo" type="button">Correo</button>
+        <button class="chip" data-task="Informes" type="button">Informes</button>
+        <button class="chip" data-task="Reuniones" type="button">Reuniones</button>
+        <button class="chip" data-task="Análisis" type="button">Análisis</button>
+        <button class="chip" data-task="IT" type="button">IT</button>
+        <button class="chip" data-task="RRHH" type="button">RRHH</button>
       </div>
 
-      <div class="sidebar__card">
-        <div class="sidebar__header">
-          <div class="kicker" data-i18n="quick">Atajos</div>
+      <section class="recents" aria-label="Recientes">
+        <div class="sectionTitle">
+          <span>Recientes</span>
+          <button class="link" id="btnShowRecents" type="button">Ver</button>
         </div>
-        <div class="chips" id="quickChips"></div>
-      </div>
-    </aside>
+        <div class="recentCards" id="recentCards"></div>
+      </section>
+    </section>
 
-    <section class="content" aria-label="Prompts">
-      <div class="toolbar">
-        <div class="toolbar__left">
-          <div class="stat" id="resultStat">—</div>
-        </div>
-        <div class="toolbar__right">
-          <button class="btn btn--ghost" id="btnExport" type="button" data-i18n="export">Exportar</button>
-        </div>
+    <section class="filters" aria-label="Filtros">
+      <div class="filters__left">
+        <details class="filter">
+          <summary>Categoría</summary>
+          <div class="filter__panel" id="filterCategories"></div>
+        </details>
+
+        <details class="filter">
+          <summary>Nivel</summary>
+          <div class="filter__panel" id="filterLevels"></div>
+        </details>
+
+        <details class="filter">
+          <summary>Tags</summary>
+          <div class="filter__panel" id="filterTags"></div>
+        </details>
+
+        <button class="link" id="btnResetFilters" type="button">Reset</button>
+      </div>
+
+      <div class="filters__right">
+        <select id="sort" class="select" aria-label="Ordenar">
+          <option value="relevance">Relevancia</option>
+          <option value="title_asc">Título A→Z</option>
+          <option value="title_desc">Título Z→A</option>
+          <option value="newest">Más nuevos</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="gridWrap" aria-label="Prompts">
+      <div class="gridHeader">
+        <div class="badge" id="badgeState">Sin filtros</div>
+        <div class="muted" id="countState">—</div>
       </div>
 
       <div class="grid" id="grid"></div>
+
+      <div class="footerNote">
+        <span class="muted">Carga desde</span> <code>./prompts.json</code>
+        <span class="muted"> · Si ves 0 prompts, revisa que el archivo exista en la raíz del repo.</span>
+      </div>
     </section>
   </main>
 
-  <!-- Drawer / modal -->
-  <div class="overlay" id="overlay" hidden></div>
-  <section class="drawer" id="drawer" aria-label="Detalle de prompt" aria-modal="true" role="dialog" hidden>
-    <div class="drawer__header">
-      <div>
-        <div class="drawer__kicker" id="drawerCategory">—</div>
-        <h2 class="drawer__title" id="drawerTitle">—</h2>
+  <main class="page page--hidden" id="pagePrompt" aria-label="Detalle de prompt">
+    <header class="promptTop">
+      <button class="link" id="btnBack" type="button">← Volver</button>
+      <div class="promptTop__right">
+        <button class="iconbtn" id="btnFavToggle" type="button" aria-label="Guardar">☆</button>
       </div>
-      <div class="drawer__actions">
-        <button class="btn btn--ghost" id="btnFav" type="button">★</button>
-        <button class="btn btn--primary" id="btnCopy" type="button" data-i18n="copy">Copiar</button>
-        <button class="btn btn--ghost" id="btnClose" type="button" aria-label="Cerrar">✕</button>
-      </div>
-    </div>
+    </header>
 
-    <div class="drawer__body">
-      <div class="panel">
-        <div class="panel__header">
-          <div class="panel__title" data-i18n="prompt">Prompt</div>
-          <div class="badges" id="drawerBadges"></div>
+    <section class="promptLayout">
+      <section class="promptEditor" aria-label="Prompt editable">
+        <div class="promptTitle" id="pTitle">—</div>
+        <div class="promptMeta" id="pMeta">—</div>
+
+        <textarea class="promptTextarea" id="pText" spellcheck="false"></textarea>
+
+        <div class="promptActions">
+          <button class="btn btn--primary" id="btnCopy" type="button">Copiar prompt</button>
+          <button class="btn" id="btnCopyPlain" type="button">Copiar (fallback)</button>
         </div>
-        <pre class="prompt" id="drawerPrompt" tabindex="0"></pre>
-      </div>
+      </section>
 
-      <div class="panel">
-        <div class="panel__header">
-          <div class="panel__title" data-i18n="variables">Variables</div>
-        </div>
-        <div class="vars" id="drawerVars"></div>
-      </div>
-
-      <div class="panel">
-        <div class="panel__header">
-          <div class="panel__title" data-i18n="how">Cómo usarlo</div>
-        </div>
-        <ol class="steps" id="drawerHow"></ol>
-      </div>
-    </div>
-  </section>
-
-  <!-- Guide modal -->
-  <section class="modal" id="guideModal" aria-label="Guía de prompting" aria-modal="true" role="dialog" hidden>
-    <div class="modal__card">
-      <div class="modal__head">
-        <h3 class="modal__title" data-i18n="guideTitle">Guía rápida: prompts efectivos (TCREI)</h3>
-        <button class="btn btn--ghost" id="btnGuideClose" type="button" aria-label="Cerrar" onclick="openGuide(false)">✕</button>
-      </div>
-      <div class="modal__body">
-        <div class="guide">
-          <div class="guide__item">
-            <div class="guide__k">T — Tarea</div>
-            <div class="guide__v" data-i18n="gT">Di exactamente qué necesitas y para qué.</div>
-          </div>
-          <div class="guide__item">
-            <div class="guide__k">C — Contexto</div>
-            <div class="guide__v" data-i18n="gC">Incluye audiencia, país, canal, datos disponibles, limitaciones.</div>
-          </div>
-          <div class="guide__item">
-            <div class="guide__k">R — Reglas</div>
-            <div class="guide__v" data-i18n="gR">Formato, tono, qué evitar, criterios de calidad.</div>
-          </div>
-          <div class="guide__item">
-            <div class="guide__k">E — Ejemplo</div>
-            <div class="guide__v" data-i18n="gE">Incluye 1 ejemplo corto si el output es delicado.</div>
-          </div>
-          <div class="guide__item">
-            <div class="guide__k">I — Inputs</div>
-            <div class="guide__v" data-i18n="gI">Pega la información (texto, tabla, bullets).</div>
-          </div>
+      <aside class="promptInfo" aria-label="Información">
+        <div class="infoBlock">
+          <div class="k">Variables</div>
+          <div class="vars" id="pVars"></div>
         </div>
 
-        <div class="callout">
-          <strong data-i18n="guideNoteTitle">Regla de oro:</strong>
-          <span data-i18n="guideNote">si el resultado se usará con cliente, añade restricciones de tono y pide verificación de datos antes de afirmar.</span>
+        <div class="infoBlock">
+          <div class="k">Formato de salida</div>
+          <div class="v muted" id="pOut">—</div>
         </div>
 
-        <details class="details">
-          <summary data-i18n="guideBuilder">Plantilla lista para copiar</summary>
-          <pre class="prompt">### T (Tarea)
-[Describe la tarea]
+        <div class="infoBlock">
+          <div class="k">Tags</div>
+          <div class="tags" id="pTags"></div>
+        </div>
 
-### C (Contexto)
-[Audiencia / canal / país / objetivo]
-
-### R (Reglas)
-- Formato: [bullets / tabla / JSON]
-- Tono: [formal / cercano]
-- Restricciones: [no inventar datos]
-
-### E (Ejemplo)
-[Opcional: 1 mini ejemplo]
-
-### I (Inputs)
-[pega aquí la información]</pre>
+        <details class="tcrei">
+          <summary>¿Qué es TCREI?</summary>
+          <div class="tcrei__body">
+            <div><strong>T — Tarea:</strong> qué necesitas y para qué.</div>
+            <div><strong>C — Contexto:</strong> audiencia, país, canal, limitaciones.</div>
+            <div><strong>R — Reglas:</strong> formato, tono, criterios de calidad.</div>
+            <div><strong>E — Ejemplo:</strong> opcional si el output es delicado.</div>
+            <div><strong>I — Inputs:</strong> datos y variables.</div>
+          </div>
         </details>
-      </div>
-    </div>
-  </section>
+      </aside>
+    </section>
+  </main>
 
-  <footer class="footer">
-    <div class="footer__inner">
-      <div class="footer__left">
-        <div class="muted">© Connect · Prompt Library</div>
-      </div>
-      <div class="footer__right muted" id="buildMeta">—</div>
-    </div>
-  </footer>
+  <div class="toast" id="toast" aria-live="polite" aria-atomic="true"></div>
 
-  <script src="app.js"></script>
+  <script src="./app.js"></script>
 </body>
 </html>
