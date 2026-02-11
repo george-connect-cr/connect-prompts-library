@@ -77,26 +77,22 @@
     .side__div{height:1px;background:var(--line);margin:.5rem .625rem}
     @media(max-width:768px){.side{transform:translateX(-100%)}.side.open{transform:translateX(0)}}
 
-    /* ── MAIN AREA ── */
+    /* ── MAIN ── */
     .shell{margin-left:var(--side-w);padding-top:48px;min-height:100vh;transition:margin .2s}
     @media(max-width:768px){.shell{margin-left:0}}
-    .view{display:none;animation:fadeIn .2s ease}
-    .view.on{display:block}
+    .view{display:none;animation:fadeIn .2s ease}.view.on{display:block}
     @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
-    /* ── HERO BANNER (like OpenAI) ── */
+    /* ── HERO BANNER ── */
     .hero-banner{padding:2rem 2.5rem;border-radius:var(--r3);margin:1.5rem 2rem 0;background:linear-gradient(135deg,#E8553A 0%,#F0845C 40%,var(--cyan) 100%);color:#fff;position:relative;overflow:hidden}
     .hero-banner::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");pointer-events:none}
     .hero-banner__sub{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;opacity:.8;margin-bottom:.5rem}
     .hero-banner__h{font-size:2rem;font-weight:900;letter-spacing:-.02em;line-height:1.15;margin-bottom:.75rem}
     .hero-banner__p{font-size:.875rem;line-height:1.6;max-width:640px;opacity:.9}
 
-    /* ── SECTION CONTENT ── */
+    /* ── SECTIONS ── */
     .sec{padding:2rem 2rem 3rem}
     .sec__h{font-size:1.25rem;font-weight:900;letter-spacing:-.02em;color:var(--ink);margin-bottom:1rem}
-    .sec__sub{font-size:.85rem;color:var(--ink3);margin-bottom:1.5rem;max-width:560px}
-
-    /* Content cards grid */
     .content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.75rem}
     .cc{background:var(--s1);border:1px solid var(--line);border-radius:var(--r2);padding:1.25rem;transition:all .15s;cursor:pointer;display:flex;flex-direction:column;gap:.5rem}
     .cc:hover{box-shadow:var(--shadow-h);border-color:var(--line2);transform:translateY(-1px)}
@@ -106,40 +102,30 @@
     .cc__h{font-size:.9rem;font-weight:700;color:var(--ink)}
     .cc__p{font-size:.775rem;color:var(--ink3);line-height:1.5}
     .cc__tag{font-size:.6rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700;color:var(--ink4);margin-top:auto;padding-top:.25rem}
-
-    /* Placeholder sections */
     .placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:400px;color:var(--ink4);text-align:center;gap:.75rem}
     .placeholder__ico{font-size:2.5rem;opacity:.4}
     .placeholder__h{font-size:1.1rem;font-weight:700;color:var(--ink3)}
     .placeholder__p{font-size:.8rem;max-width:360px}
 
     /* ══════════════════════════════════════
-       PROMPT LIBRARY (Claude Docs style)
+       PROMPT LIBRARY
     ══════════════════════════════════════ */
     .pl{padding:1.5rem 2rem 3rem}
     .pl__head{text-align:center;margin-bottom:1.75rem}
     .pl__h{font-size:1.6rem;font-weight:900;letter-spacing:-.03em;color:var(--ink);margin-bottom:.375rem}
     .pl__sub{font-size:.85rem;color:var(--ink3)}
-
     .pl__toolbar{display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
     .pl__search{flex:1;min-width:200px;position:relative}
     .pl__q{width:100%;padding:.55rem .75rem .55rem 2.25rem;background:var(--s2);border:1px solid var(--line);border-radius:var(--r);font-size:.825rem;color:var(--ink);outline:none;transition:border .15s}
-    .pl__q::placeholder{color:var(--ink4)}
-    .pl__q:focus{border-color:var(--brand)}
+    .pl__q::placeholder{color:var(--ink4)}.pl__q:focus{border-color:var(--brand)}
     .pl__q-ico{position:absolute;left:.7rem;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--ink4)}
     .pl__sel{padding:.55rem .75rem;background:var(--s2);border:1px solid var(--line);border-radius:var(--r);font-size:.8rem;color:var(--ink3);cursor:pointer;outline:none}
     .pl__count{font-size:.75rem;color:var(--ink4);margin-left:auto}
 
-    /* Prompt grid — Claude Docs dark card style */
     .pg{display:grid;grid-template-columns:repeat(3,1fr);gap:.625rem}
     @media(max-width:1100px){.pg{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:700px){.pg{grid-template-columns:1fr}}
-
-    .pc{
-      background:var(--s2);border:1px solid var(--line);border-radius:var(--r2);
-      padding:1.125rem 1.25rem;cursor:pointer;transition:all .15s;
-      display:flex;flex-direction:column;gap:.375rem;position:relative;
-    }
+    .pc{background:var(--s2);border:1px solid var(--line);border-radius:var(--r2);padding:1.125rem 1.25rem;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;gap:.375rem;position:relative}
     .pc:hover{border-color:var(--line2);box-shadow:var(--shadow-h);transform:translateY(-1px)}
     .pc__cat{font-size:.6rem;text-transform:uppercase;letter-spacing:.07em;font-weight:700;color:var(--brand-t)}
     .pc__h{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.3}
@@ -152,55 +138,84 @@
     .pc:hover .pc__star{opacity:.4}.pc__star:hover{opacity:1!important}.pc__star.on{opacity:1}
     .pc{animation:rise .2s ease both}
     @keyframes rise{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-
     mark{background:var(--brand-dim);color:var(--brand-t);border-radius:2px;padding:0 1px}
+    .empty{text-align:center;padding:3rem 1rem;color:var(--ink4);grid-column:1/-1}
+    .empty__h{font-size:.95rem;font-weight:700;color:var(--ink3);margin-bottom:.25rem}
 
-    /* ── PROMPT DETAIL (overlay) ── */
-    .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:2rem}
-    .modal-bg.on{display:flex}
-    .modal{background:var(--s1);border:1px solid var(--line);border-radius:var(--r3);width:100%;max-width:780px;max-height:85vh;overflow-y:auto;box-shadow:var(--shadow-d);animation:modalIn .2s ease}
-    @keyframes modalIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
-    .modal__top{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--s1);z-index:1;border-radius:var(--r3) var(--r3) 0 0}
-    .modal__title{font-size:1.1rem;font-weight:900;color:var(--ink);letter-spacing:-.01em}
-    .modal__close{background:var(--s2);border:none;width:28px;height:28px;border-radius:100px;display:flex;align-items:center;justify-content:center;color:var(--ink3);font-size:.9rem;transition:all .1s}
-    .modal__close:hover{background:var(--s3);color:var(--ink)}
-    .modal__body{padding:1.5rem;display:grid;grid-template-columns:1fr 220px;gap:1.5rem}
-    @media(max-width:700px){.modal__body{grid-template-columns:1fr}}
-    .modal__editor{display:flex;flex-direction:column;gap:.75rem}
-    .modal__meta{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-    .modal__meta-i{font-size:.75rem;color:var(--ink3);display:inline-flex;align-items:center;gap:.2rem}
-    .modal__ta{width:100%;min-height:300px;padding:1rem;background:var(--s2);border:1.5px solid var(--line);border-radius:var(--r2);font-family:var(--mono);font-size:.775rem;line-height:1.75;color:var(--ink);resize:vertical;outline:none;transition:border .15s}
-    .modal__ta:focus{border-color:var(--brand)}
-    .modal__actions{display:flex;gap:.375rem}
-    .btn{display:inline-flex;align-items:center;gap:.25rem;padding:.5rem 1rem;border:1px solid var(--line);border-radius:var(--r);font-size:.8rem;font-weight:600;color:var(--ink2);background:var(--s1);transition:all .12s}
-    .btn:hover{border-color:var(--line2);color:var(--ink)}
-    .btn--b{background:var(--brand);border-color:var(--brand);color:#fff}
-    .btn--b:hover{background:var(--brand-h);border-color:var(--brand-h);color:#fff}
-    .modal__side{display:flex;flex-direction:column;gap:1rem}
-    .si__k{font-size:.575rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--ink4);margin-bottom:.25rem}
-    .si__v{font-size:.775rem;color:var(--ink2)}
-    .vars{display:flex;flex-wrap:wrap;gap:.25rem}
-    .var{padding:.15rem .45rem;background:var(--brand-dim);border:1px solid var(--brand-t);border-radius:var(--r);font-family:var(--mono);font-size:.675rem;color:var(--brand-t);font-weight:500}
-    .dtag{font-size:.675rem;padding:.1rem .4rem;background:var(--s3);border-radius:100px;color:var(--ink4);font-weight:500}
-    .cx-badge{display:inline-flex;align-items:center;gap:.2rem;padding:.1rem .375rem;border-radius:100px;font-size:.6rem;font-weight:700}
+    /* ══════════════════════════════════════
+       MODAL — NEW UX
+    ══════════════════════════════════════ */
+    .mbg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:1.5rem}
+    .mbg.on{display:flex}
+    .mdl{background:var(--s1);border:1px solid var(--line);border-radius:var(--r3);width:100%;max-width:720px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-d);animation:mIn .2s ease}
+    @keyframes mIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+
+    .mdl__top{display:flex;align-items:center;justify-content:space-between;padding:.875rem 1.5rem;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--s1);z-index:1;border-radius:var(--r3) var(--r3) 0 0}
+    .mdl__top-l{display:flex;flex-direction:column;gap:.15rem}
+    .mdl__cat{font-size:.6rem;text-transform:uppercase;letter-spacing:.07em;font-weight:700;color:var(--brand-t)}
+    .mdl__title{font-size:1.05rem;font-weight:900;color:var(--ink);letter-spacing:-.01em}
+    .mdl__x{background:var(--s2);border:none;width:28px;height:28px;border-radius:100px;display:flex;align-items:center;justify-content:center;color:var(--ink3);font-size:.85rem;transition:all .1s;flex-shrink:0}
+    .mdl__x:hover{background:var(--s3);color:var(--ink)}
+
+    .mdl__body{padding:1.25rem 1.5rem;display:flex;flex-direction:column;gap:1.125rem}
+
+    /* What box */
+    .wb{background:linear-gradient(135deg,var(--brand-dim),var(--cyan-dim));border:1px solid var(--line);border-radius:var(--r2);padding:.875rem 1.125rem}
+    .wb__k{font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--brand-t);margin-bottom:.2rem}
+    .wb__v{font-size:.875rem;color:var(--ink);line-height:1.55;font-weight:500}
+
+    /* Var fields */
+    .vf-h{font-size:.85rem;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:.375rem;margin-bottom:.5rem}
+    .vf-h .step{width:22px;height:22px;border-radius:50%;background:var(--brand);color:#fff;font-size:.65rem;font-weight:900;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+    .vf{margin-bottom:.5rem}
+    .vf__label{font-size:.7rem;font-weight:700;color:var(--ink3);margin-bottom:.2rem;display:flex;align-items:center;gap:.25rem}
+    .vf__label code{font-family:var(--mono);color:var(--brand-t);background:var(--brand-dim);padding:.05rem .3rem;border-radius:4px;font-size:.625rem}
+    .vf__ta{width:100%;padding:.55rem .75rem;background:var(--s2);border:1.5px solid var(--line);border-radius:var(--r);font-size:.825rem;color:var(--ink);outline:none;transition:border .15s;resize:vertical;min-height:72px;font-family:var(--sans);line-height:1.5}
+    .vf__ta::placeholder{color:var(--ink4)}.vf__ta:focus{border-color:var(--brand)}
+    .vf__hint{font-size:.65rem;color:var(--ink4);margin-top:.15rem}
+
+    /* Preview */
+    .pv-h{font-size:.85rem;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:.375rem;margin-bottom:.375rem}
+    .pv-h .step{width:22px;height:22px;border-radius:50%;background:var(--ink3);color:#fff;font-size:.65rem;font-weight:900;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+    .pv-tog{display:flex;background:var(--s2);border-radius:100px;padding:2px;width:fit-content;margin-bottom:.5rem}
+    .pv-tog__b{padding:.2rem .65rem;border:none;background:transparent;border-radius:100px;font-size:.675rem;font-weight:600;color:var(--ink4);cursor:pointer;transition:all .12s}
+    .pv-tog__b.on{background:var(--s1);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+    .pv-box{background:var(--s2);border:1.5px solid var(--line);border-radius:var(--r2);padding:.875rem 1rem;font-size:.775rem;line-height:1.7;color:var(--ink2);max-height:220px;overflow-y:auto}
+    .pv-box b{color:var(--brand-t);font-weight:700}
+    .pv-box .hl{background:#2EC4B618;border-radius:3px;padding:0 3px;color:var(--cyan);font-weight:600}
+    .pv-raw{font-family:var(--mono);font-size:.725rem;white-space:pre-wrap;color:var(--ink3)}
+
+    /* Actions */
+    .acts{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+    .btn{display:inline-flex;align-items:center;gap:.35rem;padding:.575rem 1.125rem;border-radius:var(--r);font-size:.825rem;font-weight:700;border:none;cursor:pointer;transition:all .15s}
+    .btn--gem{background:var(--ink);color:#fff;position:relative;overflow:hidden}
+    .btn--gem::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#4285F4,#34A853,#FBBC04,#EA4335);opacity:0;transition:opacity .2s}
+    .btn--gem:hover::before{opacity:1}
+    .btn--gem span{position:relative;z-index:1;display:flex;align-items:center;gap:.35rem}
+    .btn--copy{background:var(--brand);color:#fff}.btn--copy:hover{background:var(--brand-h)}
+    .btn--ghost{background:transparent;color:var(--ink3);border:1px solid var(--line);padding:.5rem .875rem}.btn--ghost:hover{border-color:var(--line2);color:var(--ink2)}
+    .or-d{font-size:.675rem;color:var(--ink4);font-weight:600}
+
+    /* Info strip */
+    .istrip{display:flex;gap:1.25rem;padding:.75rem 1rem;background:var(--s2);border-radius:var(--r2);flex-wrap:wrap}
+    .istrip__i{display:flex;flex-direction:column;gap:.1rem}
+    .istrip__k{font-size:.55rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--ink4)}
+    .istrip__v{font-size:.75rem;color:var(--ink2);font-weight:500}
+    .istrip__v code{font-family:var(--mono);font-size:.675rem}
+    .cx-badge{display:inline-flex;align-items:center;gap:.2rem;font-size:.65rem;font-weight:700}
     .cx-badge::before{content:'';width:5px;height:5px;border-radius:50%}
-    .cx--1{background:#1A875412;color:#1A8754}.cx--1::before{background:#1A8754}
-    .cx--2{background:#2563EB12;color:#2563EB}.cx--2::before{background:#2563EB}
-    .cx--3{background:#D9770612;color:#D97706}.cx--3::before{background:#D97706}
-    .cx--4{background:#DC262612;color:#DC2626}.cx--4::before{background:#DC2626}
+    .cx--1::before{background:#1A8754}.cx--1{color:#1A8754}
+    .cx--2::before{background:#2563EB}.cx--2{color:#2563EB}
+    .cx--3::before{background:#D97706}.cx--3{color:#D97706}
+    .cx--4::before{background:#DC2626}.cx--4{color:#DC2626}
 
     /* ── TOAST ── */
     .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(120%);background:var(--ink);color:var(--bg);padding:.55rem 1.15rem;border-radius:var(--r2);font-size:.8rem;font-weight:600;box-shadow:0 12px 40px rgba(0,0,0,.2);z-index:300;opacity:0;transition:all .25s cubic-bezier(.34,1.56,.64,1);pointer-events:none}
     .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-    /* ── MOBILE BURGER ── */
     .burger{display:none;background:none;border:none;padding:.3rem;color:var(--ink3)}
     .burger svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round}
     @media(max-width:768px){.burger{display:flex}}
-
-    /* ── EMPTY ── */
-    .empty{text-align:center;padding:3rem 1rem;color:var(--ink4);grid-column:1/-1}
-    .empty__h{font-size:.95rem;font-weight:700;color:var(--ink3);margin-bottom:.25rem}
   </style>
 </head>
 <body>
@@ -234,54 +249,27 @@
 <!-- ═══ SIDEBAR ═══ -->
 <nav class="side" id="side">
   <div class="side__grp">
-    <button class="nav-item on" data-v="home">
-      <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4"/></svg>
-      Home
-    </button>
-    <button class="nav-item" data-v="events">
-      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      Events
-    </button>
-    <button class="nav-item" data-v="prompts">
-      <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-      Prompt Library
-    </button>
-    <button class="nav-item" data-v="whats-new">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      What's New
-    </button>
+    <button class="nav-item on" data-v="home"><svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4"/></svg>Home</button>
+    <button class="nav-item" data-v="events"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Events</button>
+    <button class="nav-item" data-v="prompts"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Prompt Library</button>
+    <button class="nav-item" data-v="whats-new"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>What's New</button>
   </div>
   <div class="side__div"></div>
   <div class="side__grp">
     <div class="side__label">Comunidad</div>
-    <button class="nav-item" data-v="stories">
-      <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-      Stories
-    </button>
-    <button class="nav-item" data-v="use-cases">
-      <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      Use Cases
-    </button>
-    <button class="nav-item" data-v="champions">
-      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-      Champions
-    </button>
+    <button class="nav-item" data-v="stories"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Stories</button>
+    <button class="nav-item" data-v="use-cases"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Use Cases</button>
+    <button class="nav-item" data-v="champions"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>Champions</button>
   </div>
   <div class="side__div"></div>
   <div class="side__grp">
     <div class="side__label">Recursos</div>
-    <button class="nav-item" data-v="education">
-      <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>
-      Education
-    </button>
-    <button class="nav-item" data-v="help">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      Help
-    </button>
+    <button class="nav-item" data-v="education"><svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>Education</button>
+    <button class="nav-item" data-v="help"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Help</button>
   </div>
 </nav>
 
-<!-- ═══ CONTENT SHELL ═══ -->
+<!-- ═══ CONTENT ═══ -->
 <div class="shell" id="shell">
 
   <!-- HOME -->
@@ -294,7 +282,7 @@
     <section class="sec">
       <div class="sec__h">Acceso rápido</div>
       <div class="content-grid">
-        <div class="cc" onclick="nav('prompts')"><div class="cc__ico cc__ico--brand">⌘</div><div class="cc__h">Prompt Library</div><div class="cc__p">150 prompts listos para usar con el framework T-C-R-E-I, organizados por área.</div><div class="cc__tag">150 prompts</div></div>
+        <div class="cc" onclick="nav('prompts')"><div class="cc__ico cc__ico--brand">⌘</div><div class="cc__h">Prompt Library</div><div class="cc__p">150 prompts listos para usar, organizados por área. Completa los datos y ejecuta en Gemini.</div><div class="cc__tag">150 prompts</div></div>
         <div class="cc" onclick="nav('use-cases')"><div class="cc__ico cc__ico--cyan">◆</div><div class="cc__h">Casos de uso</div><div class="cc__p">Ejemplos reales de cómo cada departamento usa IA en su trabajo diario.</div><div class="cc__tag">Por departamento</div></div>
         <div class="cc" onclick="nav('education')"><div class="cc__ico cc__ico--brand">▲</div><div class="cc__h">Education</div><div class="cc__p">Guías, tutoriales y mejores prácticas para sacarle provecho a la IA.</div><div class="cc__tag">Aprendizaje</div></div>
         <div class="cc" onclick="nav('champions')"><div class="cc__ico cc__ico--cyan">★</div><div class="cc__h">Champions</div><div class="cc__p">Únete al programa de campeones de IA y lidera la adopción en tu equipo.</div><div class="cc__tag">Comunidad</div></div>
@@ -323,49 +311,60 @@
           <input class="pl__q" id="plQ" type="search" placeholder="Search…" autocomplete="off"/>
         </div>
         <select class="pl__sel" id="plCat"><option value="">All categories</option></select>
-        <select class="pl__sel" id="plSort">
-          <option value="rel">Relevance</option>
-          <option value="az">A → Z</option>
-          <option value="za">Z → A</option>
-          <option value="id">ID</option>
-        </select>
+        <select class="pl__sel" id="plSort"><option value="rel">Relevance</option><option value="az">A → Z</option><option value="za">Z → A</option><option value="id">ID</option></select>
         <div class="pl__count" id="plCount">—</div>
       </div>
       <div class="pg" id="plGrid"></div>
     </div>
   </div>
 
-  <!-- OTHER VIEWS (placeholder) -->
-  <div class="view" id="v-events"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Próximos eventos</div><div class="hero-banner__h">Events</div><div class="hero-banner__p">Workshops, demos y sesiones de entrenamiento en IA para todo Connect.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">📅</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">Los eventos de IA de Connect se mostrarán aquí. Estamos preparando el calendario.</div></div></div></div>
-  <div class="view" id="v-whats-new"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Actualizaciones</div><div class="hero-banner__h">What's New</div><div class="hero-banner__p">Últimas novedades del portal y herramientas de IA en Connect.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">✦</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">Las actualizaciones y changelogs aparecerán aquí.</div></div></div></div>
-  <div class="view" id="v-stories"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Historias internas</div><div class="hero-banner__h">Stories</div><div class="hero-banner__p">Cómo los equipos de Connect están transformando su trabajo con IA.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">📖</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">Las historias de éxito de los equipos se publicarán aquí.</div></div></div></div>
-  <div class="view" id="v-use-cases"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Casos reales</div><div class="hero-banner__h">Use Cases</div><div class="hero-banner__p">Casos de uso de IA por departamento y función en Connect Assistance.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">◆</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">Los casos de uso documentados se mostrarán aquí organizados por área.</div></div></div></div>
-  <div class="view" id="v-champions"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Programa interno</div><div class="hero-banner__h">Champions</div><div class="hero-banner__p">Lidera la adopción de IA en tu equipo. Comparte workflows, impulsa la innovación y escala la expertise en Connect.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">★</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">El programa de Champions de IA está en desarrollo. Pronto podrás nominarte.</div></div></div></div>
-  <div class="view" id="v-education"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Aprende</div><div class="hero-banner__h">Education</div><div class="hero-banner__p">Recursos, guías y cursos para dominar la IA en tu trabajo diario.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">▲</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">Contenido educativo y guías de IA se publicarán aquí.</div></div></div></div>
-  <div class="view" id="v-help"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Soporte</div><div class="hero-banner__h">Help</div><div class="hero-banner__p">¿Necesitas ayuda con el portal o las herramientas de IA? Estamos aquí.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">?</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">FAQs, contactos y documentación de soporte aparecerán aquí.</div></div></div></div>
+  <!-- OTHER VIEWS -->
+  <div class="view" id="v-events"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Próximos eventos</div><div class="hero-banner__h">Events</div><div class="hero-banner__p">Workshops, demos y sesiones de entrenamiento en IA para todo Connect.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">📅</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">Los eventos de IA de Connect se mostrarán aquí.</div></div></div></div>
+  <div class="view" id="v-whats-new"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Actualizaciones</div><div class="hero-banner__h">What's New</div><div class="hero-banner__p">Últimas novedades del portal y herramientas de IA en Connect.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">✦</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">Las actualizaciones aparecerán aquí.</div></div></div></div>
+  <div class="view" id="v-stories"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Historias internas</div><div class="hero-banner__h">Stories</div><div class="hero-banner__p">Cómo los equipos de Connect están transformando su trabajo con IA.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">📖</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">Las historias de éxito se publicarán aquí.</div></div></div></div>
+  <div class="view" id="v-use-cases"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Casos reales</div><div class="hero-banner__h">Use Cases</div><div class="hero-banner__p">Casos de uso de IA por departamento en Connect Assistance.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">◆</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">Los casos de uso se mostrarán aquí.</div></div></div></div>
+  <div class="view" id="v-champions"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Programa interno</div><div class="hero-banner__h">Champions</div><div class="hero-banner__p">Lidera la adopción de IA en tu equipo. Comparte workflows e impulsa la innovación.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">★</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">El programa de Champions está en desarrollo.</div></div></div></div>
+  <div class="view" id="v-education"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Aprende</div><div class="hero-banner__h">Education</div><div class="hero-banner__p">Recursos, guías y cursos para dominar la IA en tu trabajo diario.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">▲</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">Contenido educativo se publicará aquí.</div></div></div></div>
+  <div class="view" id="v-help"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Soporte</div><div class="hero-banner__h">Help</div><div class="hero-banner__p">¿Necesitas ayuda con el portal o las herramientas de IA?</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">?</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">FAQs y soporte aparecerán aquí.</div></div></div></div>
 </div>
 
-<!-- ═══ PROMPT MODAL ═══ -->
-<div class="modal-bg" id="modalBg">
-  <div class="modal" id="modal">
-    <div class="modal__top">
-      <div class="modal__title" id="mTitle">—</div>
-      <button class="modal__close" id="mClose" type="button">✕</button>
-    </div>
-    <div class="modal__body">
-      <div class="modal__editor">
-        <div class="modal__meta" id="mMeta"></div>
-        <textarea class="modal__ta" id="mText" spellcheck="false"></textarea>
-        <div class="modal__actions">
-          <button class="btn btn--b" id="mCopy" type="button">Copy prompt</button>
-          <button class="btn" id="mRestore" type="button">Restore</button>
-        </div>
+<!-- ═══ MODAL — NEW UX ═══ -->
+<div class="mbg" id="mbg">
+  <div class="mdl" id="mdl">
+    <div class="mdl__top">
+      <div class="mdl__top-l">
+        <div class="mdl__cat" id="mCat">—</div>
+        <div class="mdl__title" id="mTitle">—</div>
       </div>
-      <aside class="modal__side">
-        <div><div class="si__k">ID</div><div class="si__v" id="mId" style="font-family:var(--mono)">—</div></div>
-        <div><div class="si__k">Variables</div><div class="vars" id="mVars"></div></div>
-        <div><div class="si__k">Tags</div><div class="tags-row" id="mTags" style="display:flex;flex-wrap:wrap;gap:.2rem"></div></div>
-      </aside>
+      <button class="mdl__x" id="mX" type="button">✕</button>
+    </div>
+    <div class="mdl__body">
+      <!-- What does it do -->
+      <div class="wb">
+        <div class="wb__k" id="mWbK">¿Qué hace este prompt?</div>
+        <div class="wb__v" id="mDesc">—</div>
+      </div>
+      <!-- Variable fields -->
+      <div id="mVarsSection"></div>
+      <!-- Preview -->
+      <div>
+        <div class="pv-h" id="mPvH"><span class="step" style="background:var(--ink3)">2</span> <span>Vista previa</span></div>
+        <div class="pv-tog">
+          <button class="pv-tog__b on" id="togFmt" type="button">Formateado</button>
+          <button class="pv-tog__b" id="togRaw" type="button">Raw</button>
+        </div>
+        <div class="pv-box" id="pvFmt"></div>
+        <div class="pv-box pv-raw" id="pvRaw" style="display:none"></div>
+      </div>
+      <!-- Actions -->
+      <div class="acts">
+        <button class="btn btn--gem" id="btnGem" type="button"><span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" stroke="#fff" stroke-width="1.5"/><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07" stroke="#fff" stroke-width=".8" opacity=".4"/></svg> Usar en Gemini</span></button>
+        <span class="or-d">o</span>
+        <button class="btn btn--copy" id="btnCpy" type="button">Copiar prompt</button>
+        <button class="btn btn--ghost" id="btnClr" type="button">Limpiar</button>
+      </div>
+      <!-- Info strip -->
+      <div class="istrip" id="mStrip"></div>
     </div>
   </div>
 </div>
@@ -376,18 +375,101 @@
 (function(){
 'use strict';
 const CX={1:'Básico',2:'Estándar',3:'Intermedio',4:'Avanzado'};
-let DATA=[],LANG=localStorage.getItem('cp_l')||'es',FAVS=JSON.parse(localStorage.getItem('cp_f')||'[]'),cur=null,origT='';
+const VHINTS={
+  notas:{es:'Pega tus notas tal cual las tengas',en:'Paste your notes as-is'},
+  documento:{es:'Pega o describe el documento',en:'Paste or describe the document'},
+  texto:{es:'Pega el texto a procesar',en:'Paste the text to process'},
+  proceso:{es:'Describe el proceso paso a paso',en:'Describe the process step by step'},
+  tema:{es:'Describe el tema o situación',en:'Describe the topic or situation'},
+  correo:{es:'Pega el correo o describe la situación',en:'Paste the email or describe the situation'},
+  datos:{es:'Pega los datos a analizar',en:'Paste the data to analyze'},
+  incidente:{es:'Describe el incidente',en:'Describe the incident'},
+  script:{es:'Describe qué quieres automatizar',en:'Describe what you want to automate'},
+  requerimiento:{es:'Describe el requerimiento',en:'Describe the requirement'},
+  audiencia:{es:'Describe la audiencia objetivo',en:'Describe the target audience'},
+  producto:{es:'Describe el producto o servicio',en:'Describe the product or service'},
+  campana:{es:'Describe la campaña',en:'Describe the campaign'},
+  objetivos:{es:'Lista los objetivos principales',en:'List the main objectives'},
+  competidores:{es:'Lista los competidores a analizar',en:'List competitors to analyze'},
+  objeciones:{es:'Lista las objeciones comunes',en:'List common objections'},
+  consulta:{es:'Escribe la consulta',en:'Write the query'},
+  puesto:{es:'Describe el puesto',en:'Describe the position'},
+  evaluacion:{es:'Describe lo que quieres evaluar',en:'Describe what to evaluate'},
+  proveedor:{es:'Describe el proveedor o servicio',en:'Describe the vendor or service'},
+  riesgo:{es:'Describe el riesgo identificado',en:'Describe the identified risk'},
+  politica:{es:'Describe la política a revisar',en:'Describe the policy to review'},
+  proyecto:{es:'Describe el proyecto',en:'Describe the project'},
+  contexto:{es:'Provee el contexto necesario',en:'Provide the necessary context'},
+  caso:{es:'Describe el caso',en:'Describe the case'},
+  situacion:{es:'Describe la situación',en:'Describe the situation'},
+  feedback:{es:'Pega el feedback recibido',en:'Paste the feedback received'},
+  reunion:{es:'Describe la reunión o pega las notas',en:'Describe the meeting or paste notes'},
+  agenda:{es:'Lista los temas de la agenda',en:'List agenda topics'},
+  minuta:{es:'Pega la minuta o notas de la reunión',en:'Paste meeting minutes or notes'},
+};
+let DATA=[],LANG=localStorage.getItem('cp_l')||'es',FAVS=JSON.parse(localStorage.getItem('cp_f')||'[]'),cur=null;
 const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
 function t(o){if(!o)return'';if(typeof o==='string')return o;return o[LANG]||o.es||o.en||'';}
 function ck(p){return p.category?.key||'';}
 function cl(p){return t(p.category);}
 function norm(s){return(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();}
 
+// Extract Tarea from TCREI prompt as human description
+function extractDesc(p){
+  const txt=t(p.prompt)||'';
+  const m=txt.match(/\*\*T\s*\(Tare?a\):\*\*\s*(.+)/i)||txt.match(/\*\*T\s*\(Task\):\*\*\s*(.+)/i);
+  return m?m[1].trim().replace(/\.$/,''):'';
+}
+
+// Build full prompt with variable values filled
+function buildPrompt(p,vals){
+  let txt=t(p.prompt)||'';
+  (p.variables||[]).forEach(v=>{
+    const val=vals[v]||`{{${v}}}`;
+    txt=txt.replace(new RegExp('\\{\\{'+v+'\\}\\}','g'),val);
+  });
+  return txt;
+}
+
+// Build formatted preview HTML
+function buildFmtPreview(p,vals){
+  let txt=t(p.prompt)||'';
+  // Strip the first TCREI intro line
+  txt=txt.replace(/^Usa?\s+el\s+marco\s+\*\*T-C-R-E-I\*\*.+\n*/i,'');
+  txt=txt.replace(/^Use\s+the\s+\*\*T-C-R-E-I\*\*.+\n*/i,'');
+  // Convert sections
+  const sections=[
+    {re:/\*\*T\s*\(Tare?a?\):\*\*\s*/i,label:LANG==='es'?'Tarea':'Task'},
+    {re:/\*\*T\s*\(Task\):\*\*\s*/i,label:'Task'},
+    {re:/\*\*C\s*\(Contexto?\):\*\*\s*/i,label:LANG==='es'?'Contexto':'Context'},
+    {re:/\*\*C\s*\(Context\):\*\*\s*/i,label:'Context'},
+    {re:/\*\*R\s*\(Reglas?\):\*\*\s*/i,label:LANG==='es'?'Reglas':'Rules'},
+    {re:/\*\*R\s*\(Rules\):\*\*\s*/i,label:'Rules'},
+    {re:/\*\*E\s*\(Ejemplo?\):\*\*\s*/i,label:LANG==='es'?'Ejemplo':'Example'},
+    {re:/\*\*E\s*\(Example\):\*\*\s*/i,label:'Example'},
+    {re:/\*\*I\s*\(Inputs?\):\*\*\s*/i,label:'Inputs'},
+  ];
+  sections.forEach(s=>{txt=txt.replace(s.re,`\n<b>${s.label}:</b> `);});
+  txt=txt.replace(/\*\*/g,'');
+  // Fill variables with highlight
+  (p.variables||[]).forEach(v=>{
+    const val=vals[v];
+    if(val){
+      txt=txt.replace(new RegExp('\\{\\{'+v+'\\}\\}','g'),`<span class="hl">${val}</span>`);
+      txt=txt.replace(new RegExp('-\\s*'+val.substring(0,20),'g'),`- <span class="hl">${val}</span>`);
+    }else{
+      txt=txt.replace(new RegExp('\\{\\{'+v+'\\}\\}','g'),`<span class="hl" style="opacity:.5">⬜ ${v}</span>`);
+    }
+  });
+  txt=txt.replace(/\n/g,'<br/>');
+  return txt;
+}
+
 // Theme
 let theme=localStorage.getItem('cp_t')||'light';
-document.documentElement.setAttribute('data-t',theme);updTheme();
-$('#btnTheme').onclick=()=>{theme=theme==='dark'?'light':'dark';document.documentElement.setAttribute('data-t',theme);localStorage.setItem('cp_t',theme);updTheme();};
-function updTheme(){const d=theme==='dark';$('#tIco').innerHTML=d?'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>':'<path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>';$('#tLbl').textContent=d?'Light':'Dark';}
+document.documentElement.setAttribute('data-t',theme);updTh();
+$('#btnTheme').onclick=()=>{theme=theme==='dark'?'light':'dark';document.documentElement.setAttribute('data-t',theme);localStorage.setItem('cp_t',theme);updTh();};
+function updTh(){const d=theme==='dark';$('#tIco').innerHTML=d?'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>':'<path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>';$('#tLbl').textContent=d?'Light':'Dark';}
 
 // Lang
 $$('.lpill__b').forEach(b=>b.onclick=()=>{LANG=b.dataset.lang;localStorage.setItem('cp_l',LANG);$$('.lpill__b').forEach(x=>x.classList.toggle('on',x.dataset.lang===LANG));buildPL();});
@@ -398,25 +480,24 @@ window.nav=function(v){
   $$('.view').forEach(x=>x.classList.remove('on'));
   const el=$('#v-'+v);if(el)el.classList.add('on');
   $$('.nav-item').forEach(n=>{n.classList.toggle('on',n.dataset.v===v);});
-  window.scrollTo(0,0);
-  if(v==='prompts'&&DATA.length)renderPL();
-  // mobile close
+  window.scrollTo(0,0);if(v==='prompts'&&DATA.length)renderPL();
   $('#side').classList.remove('open');
+  history.replaceState(null,'','#'+v);
 };
 $$('.nav-item').forEach(n=>n.onclick=()=>nav(n.dataset.v));
 $('#burger').onclick=()=>$('#side').classList.toggle('open');
+// Hash routing
+window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(h)nav(h);});
+if(location.hash.length>1)setTimeout(()=>nav(location.hash.slice(1)),50);
 
-// Global search → prompts
 $('#globalQ').onkeydown=e=>{if(e.key==='Enter'&&$('#globalQ').value.trim()){nav('prompts');$('#plQ').value=$('#globalQ').value;$('#globalQ').value='';renderPL();}};
 
-// Load prompts
+// Load
 async function load(){
   try{const r=await fetch('./prompts.json');if(!r.ok)throw new Error(r.status);const d=await r.json();DATA=Array.isArray(d)?d:(d.prompts||[]);buildPL();}
   catch(e){$('#plGrid').innerHTML='<div class="empty"><div class="empty__h">prompts.json not found</div></div>';}
 }
-
 function buildPL(){
-  // Cat select
   const cats=[];const seen=new Set();
   DATA.forEach(p=>{const k=ck(p);if(!seen.has(k)){seen.add(k);cats.push({k,l:cl(p)});}});
   const allW=LANG==='es'?'Todas las categorías':'All categories';
@@ -424,14 +505,12 @@ function buildPL(){
   $('#plSub').textContent=LANG==='es'?'Explora prompts optimizados para las tareas diarias de Connect.':'Explore optimized prompts for Connect daily tasks.';
   renderPL();
 }
-
 function score(p,raw){
   if(!raw)return 1;const qn=norm(raw),ws=qn.split(/\s+/).filter(Boolean);let s=0;
   const ti=norm(t(p.title)),ca=norm(cl(p)),cak=norm(ck(p)),tgs=(p.tags||[]).map(norm),tx=norm(t(p.prompt)),vs=(p.variables||[]).map(norm),pid=norm(p.id||'');
   ws.forEach(w=>{if(pid.includes(w))s+=14;if(ti.includes(w))s+=10;if(ti.startsWith(w))s+=5;if(cak.includes(w)||ca.includes(w))s+=6;if(tgs.some(x=>x.includes(w)))s+=8;if(vs.some(x=>x.includes(w)))s+=4;if(tx.includes(w))s+=2;});
   if(ti.includes(qn))s+=15;return s;
 }
-
 function renderPL(){
   const raw=$('#plQ').value.trim(),catF=$('#plCat').value;
   let res=DATA.map(p=>({...p,_s:score(p,raw)}));
@@ -444,51 +523,101 @@ function renderPL(){
   else if(sv==='id')res.sort((a,b)=>(a.id||'').localeCompare(b.id||''));
   $('#plCount').textContent=`${res.length} / ${DATA.length}`;
   if(!res.length){$('#plGrid').innerHTML='<div class="empty"><div class="empty__h">'+(LANG==='es'?'Sin resultados':'No results')+'</div></div>';return;}
-  const g=$('#plGrid');
-  g.innerHTML=res.map(p=>{
-    const cx=p.complexity||2,dTags=(p.tags||[]).filter(x=>x!=='tcrei').slice(0,3),
-          preview=t(p.prompt).replace(/\*\*/g,'').replace(/\n/g,' ').substring(0,90)+'…',
+  $('#plGrid').innerHTML=res.map(p=>{
+    const dTags=(p.tags||[]).filter(x=>x!=='tcrei').slice(0,3),
+          desc=extractDesc(p)||t(p.title),
           isFav=FAVS.includes(p.id);
     return `<article class="pc" data-id="${p.id}" tabindex="0">
       <button class="pc__star ${isFav?'on':''}" data-fav="${p.id}" onclick="event.stopPropagation()">${isFav?'★':'☆'}</button>
       <div class="pc__cat">${cl(p)}</div>
       <div class="pc__h">${hl(t(p.title),raw)}</div>
-      <div class="pc__desc">${preview}</div>
+      <div class="pc__desc">${desc}</div>
       <div class="pc__foot"><div class="pc__tags">${dTags.map(x=>`<span class="pc__tag">${x}</span>`).join('')}</div><span class="pc__id">${p.id}</span></div>
     </article>`;
   }).join('');
-  g.querySelectorAll('.pc').forEach(c=>{c.onclick=()=>openM(c.dataset.id);c.onkeydown=e=>{if(e.key==='Enter')openM(c.dataset.id);};});
-  g.querySelectorAll('[data-fav]').forEach(b=>b.onclick=()=>togFav(b.dataset.fav));
+  $('#plGrid').querySelectorAll('.pc').forEach(c=>{c.onclick=()=>openM(c.dataset.id);c.onkeydown=e=>{if(e.key==='Enter')openM(c.dataset.id);};});
+  $('#plGrid').querySelectorAll('[data-fav]').forEach(b=>b.onclick=()=>togFav(b.dataset.fav));
 }
 function hl(text,raw){if(!raw)return text;const qn=norm(raw),i=norm(text).indexOf(qn);if(i===-1)return text;return text.substring(0,i)+'<mark>'+text.substring(i,i+raw.length)+'</mark>'+text.substring(i+raw.length);}
-
 $('#plQ').oninput=renderPL;$('#plCat').onchange=renderPL;$('#plSort').onchange=renderPL;
 
-// Modal
+// ═══ MODAL ═══
 function openM(id){
-  const p=DATA.find(x=>x.id===id);if(!p)return;cur=p;origT=t(p.prompt)||'';
-  $('#mTitle').textContent=t(p.title);$('#mId').textContent=p.id;
+  const p=DATA.find(x=>x.id===id);if(!p)return;cur=p;
+  $('#mCat').textContent=cl(p);
+  $('#mTitle').textContent=t(p.title);
+  // Description
+  const desc=p.description?t(p.description):extractDesc(p);
+  $('#mDesc').textContent=desc||t(p.title);
+  $('#mWbK').textContent=LANG==='es'?'¿Qué hace este prompt?':'What does this prompt do?';
+  // Variable fields
+  const vars=p.variables||[];
+  const stepLabel=LANG==='es'?'Completa tus datos':'Fill in your data';
+  const pvLabel=LANG==='es'?'Vista previa':'Preview';
+  if(vars.length){
+    $('#mVarsSection').innerHTML=`<div class="vf-h"><span class="step">1</span> ${stepLabel}</div>`+
+      vars.map(v=>{
+        const hint=VHINTS[v]?t(VHINTS[v]):'';
+        const placeholder=hint||((LANG==='es'?'Escribe o pega aquí…':'Type or paste here…'));
+        return `<div class="vf"><div class="vf__label"><code>${v}</code> ${hint}</div><textarea class="vf__ta" data-var="${v}" placeholder="${placeholder}" oninput="window._updPv()"></textarea></div>`;
+      }).join('');
+    $('#mPvH').innerHTML=`<span class="step" style="background:var(--ink3)">2</span> ${pvLabel}`;
+  }else{
+    $('#mVarsSection').innerHTML='';
+    $('#mPvH').innerHTML=`<span class="step" style="background:var(--ink3)">1</span> ${pvLabel}`;
+  }
+  updPv();
+  // Info strip
   const cx=p.complexity||2;
-  $('#mMeta').innerHTML=`<span class="cx-badge cx--${cx}">${CX[cx]||'Estándar'}</span><span class="modal__meta-i" style="color:var(--brand-t);font-weight:700">${cl(p)}</span>`;
-  $('#mText').value=origT;
-  const vs=p.variables||[];
-  $('#mVars').innerHTML=vs.length?vs.map(v=>`<span class="var">{{${v}}}</span>`).join(''):`<span style="font-size:.75rem;color:var(--ink4)">${LANG==='es'?'Ninguna':'None'}</span>`;
-  const dt=(p.tags||[]).filter(x=>x!=='tcrei');
-  $('#mTags').innerHTML=dt.map(x=>`<span class="dtag">${x}</span>`).join('');
-  $('#modalBg').classList.add('on');document.body.style.overflow='hidden';
+  const dTags=(p.tags||[]).filter(x=>x!=='tcrei');
+  $('#mStrip').innerHTML=`
+    <div class="istrip__i"><div class="istrip__k">ID</div><div class="istrip__v"><code>${p.id}</code></div></div>
+    <div class="istrip__i"><div class="istrip__k">${LANG==='es'?'Complejidad':'Complexity'}</div><div class="istrip__v"><span class="cx-badge cx--${cx}">${CX[cx]||'Estándar'}</span></div></div>
+    <div class="istrip__i"><div class="istrip__k">Tags</div><div class="istrip__v">${dTags.join(', ')||'—'}</div></div>
+    <div class="istrip__i"><div class="istrip__k">Framework</div><div class="istrip__v">T-C-R-E-I</div></div>
+  `;
+  // Show
+  $('#mbg').classList.add('on');document.body.style.overflow='hidden';
+  // Toggle state
+  $('#togFmt').classList.add('on');$('#togRaw').classList.remove('on');
+  $('#pvFmt').style.display='';$('#pvRaw').style.display='none';
 }
-function closeM(){$('#modalBg').classList.remove('on');document.body.style.overflow='';cur=null;}
-$('#mClose').onclick=closeM;
-$('#modalBg').onclick=e=>{if(e.target===$('#modalBg'))closeM();};
-document.onkeydown=e=>{if(e.key==='Escape')closeM();};
-$('#mCopy').onclick=async()=>{const txt=$('#mText').value;try{await navigator.clipboard.writeText(txt);toast(LANG==='es'?'Copiado ✓':'Copied ✓');}catch{const ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('Copied ✓');}};
-$('#mRestore').onclick=()=>{if(cur){$('#mText').value=origT;toast(LANG==='es'?'Restaurado':'Restored');}};
+
+window._updPv=function(){updPv();};
+function getVarVals(){
+  const vals={};$$('.vf__ta[data-var]').forEach(ta=>{vals[ta.dataset.var]=ta.value.trim();});return vals;
+}
+function updPv(){
+  if(!cur)return;const vals=getVarVals();
+  $('#pvFmt').innerHTML=buildFmtPreview(cur,vals);
+  const rawTxt=buildPrompt(cur,vals);
+  $('#pvRaw').textContent=rawTxt;
+}
+$('#togFmt').onclick=()=>{$('#togFmt').classList.add('on');$('#togRaw').classList.remove('on');$('#pvFmt').style.display='';$('#pvRaw').style.display='none';};
+$('#togRaw').onclick=()=>{$('#togRaw').classList.add('on');$('#togFmt').classList.remove('on');$('#pvRaw').style.display='';$('#pvFmt').style.display='none';};
+
+function getFullPrompt(){return buildPrompt(cur,getVarVals());}
+
+function closeM(){$('#mbg').classList.remove('on');document.body.style.overflow='';cur=null;}
+$('#mX').onclick=closeM;
+$('#mbg').onclick=e=>{if(e.target===$('#mbg'))closeM();};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#mbg').classList.contains('on'))closeM();});
+
+$('#btnCpy').onclick=async()=>{try{await navigator.clipboard.writeText(getFullPrompt());toast(LANG==='es'?'Prompt copiado ✓':'Prompt copied ✓');}catch{fallbackCopy(getFullPrompt());}};
+$('#btnGem').onclick=async()=>{
+  try{await navigator.clipboard.writeText(getFullPrompt());}catch{fallbackCopy(getFullPrompt());}
+  toast(LANG==='es'?'Prompt copiado ✓ — Pégalo en Gemini con Ctrl+V':'Prompt copied ✓ — Paste in Gemini with Ctrl+V');
+  setTimeout(()=>window.open('https://gemini.google.com/app','_blank'),350);
+};
+$('#btnClr').onclick=()=>{$$('.vf__ta[data-var]').forEach(ta=>{ta.value='';});updPv();toast(LANG==='es'?'Campos limpiados':'Fields cleared');};
+
+function fallbackCopy(txt){const ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);}
 
 // Favs
 function togFav(id){const i=FAVS.indexOf(id);if(i>-1)FAVS.splice(i,1);else FAVS.push(id);localStorage.setItem('cp_f',JSON.stringify(FAVS));renderPL();}
 
 // Toast
-function toast(m){const el=$('#toast');el.textContent=m;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2000);}
+function toast(m){const el=$('#toast');el.textContent=m;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2500);}
 
 load();
 })();
