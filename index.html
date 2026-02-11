@@ -37,12 +37,10 @@
       --radius-xl: 20px;
       --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
-      --level-basico: #10B981;
-      --level-intermedio: #F59E0B;
-      --level-avanzado: #EF4444;
-      --gemini: #4285F4;
-      --claude: #D97706;
-      --chatgpt: #10A37F;
+      --complexity-1: #10B981;
+      --complexity-2: #3B82F6;
+      --complexity-3: #F59E0B;
+      --complexity-4: #EF4444;
       --toast-bg: #1C1917;
     }
 
@@ -113,7 +111,6 @@
     .brand__logo {
       height: 28px;
       width: auto;
-      filter: var(--logo-filter, none);
     }
     [data-theme="dark"] .brand__logo {
       filter: brightness(0) invert(1);
@@ -123,7 +120,7 @@
       height: 24px;
       background: var(--border);
     }
-    .brand__meta { display: flex; flex-direction: column; gap: 0; }
+    .brand__meta { display: flex; flex-direction: column; }
     .brand__title {
       font-size: 0.8rem;
       font-weight: 600;
@@ -171,6 +168,33 @@
     @media (max-width: 640px) {
       .hide-sm { display: none; }
       .iconbtn { padding: 0.5rem; }
+    }
+
+    /* ═══════════════════════════════════════════
+       LANG TOGGLE
+       ═══════════════════════════════════════════ */
+    .langToggle {
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg-inset);
+      border-radius: 100px;
+      padding: 2px;
+      gap: 0;
+    }
+    .langToggle__btn {
+      padding: 0.3rem 0.625rem;
+      border: none;
+      background: transparent;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      transition: all 0.2s;
+    }
+    .langToggle__btn.active {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      box-shadow: var(--shadow-sm);
     }
 
     /* ═══════════════════════════════════════════
@@ -276,9 +300,7 @@
       padding: 0.75rem 0;
       margin-bottom: 0.5rem;
     }
-    .stat {
-      text-align: center;
-    }
+    .stat { text-align: center; }
     .stat__num {
       font-size: 1.5rem;
       font-weight: 700;
@@ -316,9 +338,7 @@
       gap: 0.5rem;
       flex-wrap: wrap;
     }
-    .filter {
-      position: relative;
-    }
+    .filter { position: relative; }
     .filter > summary {
       display: inline-flex;
       align-items: center;
@@ -337,14 +357,8 @@
     }
     .filter > summary::-webkit-details-marker { display: none; }
     .filter > summary::after { content: '▾'; margin-left: 0.25rem; font-size: 0.7em; }
-    .filter > summary:hover {
-      border-color: var(--text-tertiary);
-      color: var(--text-primary);
-    }
-    .filter[open] > summary {
-      border-color: var(--brand);
-      color: var(--brand);
-    }
+    .filter > summary:hover { border-color: var(--text-tertiary); color: var(--text-primary); }
+    .filter[open] > summary { border-color: var(--brand); color: var(--brand); }
     .filter__panel {
       position: absolute;
       top: calc(100% + 4px);
@@ -353,8 +367,8 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       padding: 0.5rem;
-      min-width: 180px;
-      max-height: 260px;
+      min-width: 220px;
+      max-height: 300px;
       overflow-y: auto;
       box-shadow: var(--shadow-lg);
       z-index: 50;
@@ -376,10 +390,7 @@
       transition: background 0.1s;
     }
     .filter__option:hover { background: var(--bg-surface-hover); }
-    .filter__option input {
-      accent-color: var(--brand);
-      margin: 0;
-    }
+    .filter__option input { accent-color: var(--brand); margin: 0; }
     .filter__option.checked { color: var(--text-primary); font-weight: 500; }
     .filters__right { display: flex; align-items: center; gap: 0.5rem; }
     .select {
@@ -405,7 +416,7 @@
     .link:hover { background: var(--brand-soft); }
 
     /* ═══════════════════════════════════════════
-       GRID HEADER & COUNT
+       GRID
        ═══════════════════════════════════════════ */
     .gridWrap {
       max-width: 1320px;
@@ -430,9 +441,6 @@
     }
     .muted { font-size: 0.8125rem; color: var(--text-tertiary); }
 
-    /* ═══════════════════════════════════════════
-       PROMPT CARDS GRID
-       ═══════════════════════════════════════════ */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -443,6 +451,9 @@
       .grid { grid-template-columns: 1fr; }
     }
 
+    /* ═══════════════════════════════════════════
+       CARDS
+       ═══════════════════════════════════════════ */
     .card {
       position: relative;
       background: var(--bg-surface);
@@ -453,7 +464,7 @@
       transition: all 0.2s ease;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.625rem;
     }
     .card:hover {
       border-color: var(--text-tertiary);
@@ -472,8 +483,9 @@
       letter-spacing: 0.06em;
       font-weight: 600;
       color: var(--brand);
+      line-height: 1.3;
     }
-    .card__level {
+    .card__complexity {
       display: inline-flex;
       align-items: center;
       gap: 0.25rem;
@@ -482,19 +494,19 @@
       font-size: 0.6875rem;
       font-weight: 600;
       white-space: nowrap;
+      flex-shrink: 0;
     }
-    .card__level--basico { background: #10B98118; color: var(--level-basico); }
-    .card__level--intermedio { background: #F59E0B18; color: var(--level-intermedio); }
-    .card__level--avanzado { background: #EF444418; color: var(--level-avanzado); }
+    .card__complexity--1 { background: #10B98118; color: var(--complexity-1); }
+    .card__complexity--2 { background: #3B82F618; color: var(--complexity-2); }
+    .card__complexity--3 { background: #F59E0B18; color: var(--complexity-3); }
+    .card__complexity--4 { background: #EF444418; color: var(--complexity-4); }
     .card__dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      display: inline-block;
+      width: 6px; height: 6px; border-radius: 50%; display: inline-block;
     }
-    .card__dot--basico { background: var(--level-basico); }
-    .card__dot--intermedio { background: var(--level-intermedio); }
-    .card__dot--avanzado { background: var(--level-avanzado); }
+    .card__dot--1 { background: var(--complexity-1); }
+    .card__dot--2 { background: var(--complexity-2); }
+    .card__dot--3 { background: var(--complexity-3); }
+    .card__dot--4 { background: var(--complexity-4); }
 
     .card__title {
       font-size: 1rem;
@@ -516,7 +528,7 @@
       align-items: center;
       justify-content: space-between;
       margin-top: auto;
-      padding-top: 0.5rem;
+      padding-top: 0.375rem;
     }
     .card__tags {
       display: flex;
@@ -532,21 +544,12 @@
       color: var(--text-tertiary);
       font-weight: 500;
     }
-    .card__compat {
-      display: flex;
-      gap: 0.25rem;
+    .card__id {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-tertiary);
       flex-shrink: 0;
     }
-    .compat-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      opacity: 0.8;
-    }
-    .compat-dot[title="Gemini"] { background: var(--gemini); }
-    .compat-dot[title="Claude"] { background: var(--claude); }
-    .compat-dot[title="ChatGPT"] { background: var(--chatgpt); }
-
     .card__fav {
       position: absolute;
       top: 0.75rem;
@@ -557,13 +560,14 @@
       opacity: 0;
       transition: opacity 0.15s;
       padding: 0.25rem;
+      z-index: 2;
     }
     .card:hover .card__fav { opacity: 0.5; }
     .card__fav:hover { opacity: 1 !important; }
     .card__fav.is-fav { opacity: 1; }
 
     /* ═══════════════════════════════════════════
-       PROMPT DETAIL VIEW
+       PROMPT DETAIL
        ═══════════════════════════════════════════ */
     .page { display: block; }
     .page--hidden { display: none; }
@@ -581,14 +585,12 @@
       margin: 0 auto;
       padding: 0 1.25rem 3rem;
       display: grid;
-      grid-template-columns: 1fr 300px;
+      grid-template-columns: 1fr 280px;
       gap: 2rem;
       align-items: start;
     }
     @media (max-width: 900px) {
-      .promptLayout {
-        grid-template-columns: 1fr;
-      }
+      .promptLayout { grid-template-columns: 1fr; }
     }
     .promptEditor {
       display: flex;
@@ -616,22 +618,20 @@
     }
     .promptTextarea {
       width: 100%;
-      min-height: 340px;
+      min-height: 380px;
       padding: 1.25rem;
       background: var(--bg-inset);
       border: 1.5px solid var(--border);
       border-radius: var(--radius-md);
       font-family: var(--font-mono);
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       line-height: 1.7;
       color: var(--text-primary);
       resize: vertical;
       outline: none;
       transition: border-color 0.2s;
     }
-    .promptTextarea:focus {
-      border-color: var(--brand);
-    }
+    .promptTextarea:focus { border-color: var(--brand); }
     .promptActions {
       display: flex;
       gap: 0.5rem;
@@ -651,22 +651,11 @@
       background: var(--bg-surface);
       transition: all 0.2s ease;
     }
-    .btn:hover {
-      border-color: var(--text-tertiary);
-      color: var(--text-primary);
-    }
-    .btn--primary {
-      background: var(--brand);
-      border-color: var(--brand);
-      color: white;
-    }
-    .btn--primary:hover {
-      background: var(--brand-hover);
-      border-color: var(--brand-hover);
-      color: white;
-    }
+    .btn:hover { border-color: var(--text-tertiary); color: var(--text-primary); }
+    .btn--primary { background: var(--brand); border-color: var(--brand); color: white; }
+    .btn--primary:hover { background: var(--brand-hover); border-color: var(--brand-hover); color: white; }
 
-    /* Sidebar info */
+    /* Sidebar */
     .promptInfo {
       display: flex;
       flex-direction: column;
@@ -708,32 +697,8 @@
       color: var(--text-tertiary);
       font-weight: 500;
     }
-    .compat-list {
-      display: flex;
-      gap: 0.5rem;
-    }
-    .compat-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-      padding: 0.25rem 0.5rem;
-      border-radius: var(--radius-sm);
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-    .compat-badge--gemini { background: #4285F418; color: var(--gemini); }
-    .compat-badge--claude { background: #D9770618; color: var(--claude); }
-    .compat-badge--chatgpt { background: #10A37F18; color: var(--chatgpt); }
-    .compat-badge__dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-    }
-    .compat-badge--gemini .compat-badge__dot { background: var(--gemini); }
-    .compat-badge--claude .compat-badge__dot { background: var(--claude); }
-    .compat-badge--chatgpt .compat-badge__dot { background: var(--chatgpt); }
 
-    /* TCREI info */
+    /* TCREI */
     .tcrei {
       background: var(--bg-surface);
       border: 1px solid var(--border);
@@ -791,18 +756,18 @@
     }
 
     /* ═══════════════════════════════════════════
-       EMPTY STATE
+       EMPTY / FOOTER
        ═══════════════════════════════════════════ */
     .empty {
       text-align: center;
       padding: 4rem 1rem;
       color: var(--text-tertiary);
+      grid-column: 1 / -1;
     }
     .empty__icon { font-size: 3rem; margin-bottom: 1rem; }
     .empty__title { font-size: 1.125rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.5rem; }
     .empty__sub { font-size: 0.875rem; }
 
-    /* Footer */
     .footerNote {
       text-align: center;
       padding: 1.5rem 0 2rem;
@@ -823,36 +788,28 @@
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
 
-    /* ═══════════════════════════════════════════
-       ANIMATIONS
-       ═══════════════════════════════════════════ */
+    /* Animations */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
     .card { animation: fadeUp 0.3s ease both; }
-    .card:nth-child(2) { animation-delay: 0.03s; }
-    .card:nth-child(3) { animation-delay: 0.06s; }
-    .card:nth-child(4) { animation-delay: 0.09s; }
-    .card:nth-child(5) { animation-delay: 0.12s; }
-    .card:nth-child(6) { animation-delay: 0.15s; }
+    .card:nth-child(2) { animation-delay: 0.02s; }
+    .card:nth-child(3) { animation-delay: 0.04s; }
+    .card:nth-child(4) { animation-delay: 0.06s; }
+    .card:nth-child(5) { animation-delay: 0.08s; }
+    .card:nth-child(6) { animation-delay: 0.10s; }
 
-    /* Focus visible */
     :focus-visible {
       outline: 2px solid var(--brand);
       outline-offset: 2px;
     }
 
-    /* Loading skeleton */
-    .skeleton {
-      background: linear-gradient(90deg, var(--bg-inset) 25%, var(--bg-surface-hover) 50%, var(--bg-inset) 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-      border-radius: var(--radius-sm);
-    }
-    @keyframes shimmer {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
+    mark {
+      background: var(--brand-soft);
+      color: var(--brand);
+      border-radius: 2px;
+      padding: 0 2px;
     }
   </style>
 </head>
@@ -875,11 +832,15 @@
       </div>
 
       <div class="topbar__actions">
+        <div class="langToggle">
+          <button class="langToggle__btn active" data-lang="es" type="button">ES</button>
+          <button class="langToggle__btn" data-lang="en" type="button">EN</button>
+        </div>
         <button class="iconbtn" id="btnFavorites" type="button" aria-label="Ver favoritos">
           ⭐ <span class="hide-sm">Favoritos</span>
         </button>
         <button class="iconbtn" id="btnTheme" type="button" aria-label="Cambiar tema">
-          🌙 <span class="hide-sm">Tema</span>
+          🌙 <span class="hide-sm">Oscuro</span>
         </button>
       </div>
     </div>
@@ -887,7 +848,6 @@
 
   <!-- ══════ LIST PAGE ══════ -->
   <main class="page" id="pageList">
-    <!-- Hero -->
     <section class="hero" aria-label="Búsqueda principal">
       <h1 class="hero__title">¿Qué necesitas <span>hacer hoy</span>?</h1>
 
@@ -896,26 +856,16 @@
           id="q"
           class="searchInput"
           type="search"
-          placeholder="Buscar prompts: correo, informe, proveedor, Helios…"
+          placeholder="Buscar: correo, SOP, proveedor, seguridad, QA, Helios…"
           autocomplete="off"
           autofocus
         />
-        <button class="searchClear" id="btnClear" type="button" aria-label="Limpiar búsqueda">✕</button>
+        <button class="searchClear" id="btnClear" type="button" aria-label="Limpiar">✕</button>
       </div>
 
-      <div class="chipRow" aria-label="Categorías rápidas">
-        <button class="chip" data-cat="all" type="button"><span class="chip__icon">📋</span> Todos</button>
-        <button class="chip" data-cat="Productividad" type="button"><span class="chip__icon">🎯</span> Productividad</button>
-        <button class="chip" data-cat="Comunicación" type="button"><span class="chip__icon">✉️</span> Comunicación</button>
-        <button class="chip" data-cat="Atención al Cliente" type="button"><span class="chip__icon">🤝</span> Atención</button>
-        <button class="chip" data-cat="Análisis" type="button"><span class="chip__icon">📊</span> Análisis</button>
-        <button class="chip" data-cat="IT" type="button"><span class="chip__icon">💻</span> IT</button>
-        <button class="chip" data-cat="RRHH" type="button"><span class="chip__icon">👥</span> RRHH</button>
-        <button class="chip" data-cat="Marketing" type="button"><span class="chip__icon">📣</span> Marketing</button>
-        <button class="chip" data-cat="Operaciones" type="button"><span class="chip__icon">⚙️</span> Operaciones</button>
-      </div>
+      <div class="chipRow" id="chipRow" aria-label="Categorías rápidas"></div>
 
-      <div class="statsBar" id="statsBar">
+      <div class="statsBar">
         <div class="stat">
           <div class="stat__num" id="statTotal">—</div>
           <div class="stat__label">Prompts</div>
@@ -931,7 +881,6 @@
       </div>
     </section>
 
-    <!-- Filters -->
     <div class="filtersWrap">
       <section class="filters" aria-label="Filtros">
         <div class="filters__left">
@@ -939,32 +888,24 @@
             <summary>Categoría</summary>
             <div class="filter__panel" id="filterCategories"></div>
           </details>
-
-          <details class="filter" id="filterLevelWrap">
-            <summary>Nivel</summary>
-            <div class="filter__panel" id="filterLevels"></div>
-          </details>
-
           <details class="filter" id="filterTagWrap">
             <summary>Tags</summary>
             <div class="filter__panel" id="filterTags"></div>
           </details>
-
           <button class="link" id="btnResetFilters" type="button">Limpiar filtros</button>
         </div>
-
         <div class="filters__right">
           <select id="sort" class="select" aria-label="Ordenar">
             <option value="relevance">Relevancia</option>
             <option value="title_asc">Título A→Z</option>
             <option value="title_desc">Título Z→A</option>
-            <option value="newest">Más nuevos</option>
+            <option value="id_asc">ID ↑</option>
+            <option value="id_desc">ID ↓</option>
           </select>
         </div>
       </section>
     </div>
 
-    <!-- Grid -->
     <section class="gridWrap" aria-label="Prompts">
       <div class="gridHeader">
         <div class="badge" id="badgeState">Todos los prompts</div>
@@ -972,22 +913,21 @@
       </div>
       <div class="grid" id="grid"></div>
       <div class="footerNote">
-        Carga desde <code>./prompts.json</code> · Connect Prompt Library v2.0
+        Connect Prompt Library v2.0 · Framework T-C-R-E-I · <span id="footerCount">150</span> prompts
       </div>
     </section>
   </main>
 
-  <!-- ══════ PROMPT DETAIL PAGE ══════ -->
+  <!-- ══════ PROMPT DETAIL ══════ -->
   <main class="page page--hidden" id="pagePrompt" aria-label="Detalle de prompt">
     <header class="promptTop">
       <button class="link" id="btnBack" type="button">← Volver a la librería</button>
       <div style="display:flex;gap:0.5rem;align-items:center">
-        <button class="iconbtn" id="btnFavToggle" type="button" aria-label="Guardar en favoritos">☆ <span class="hide-sm">Favorito</span></button>
+        <button class="iconbtn" id="btnFavToggle" type="button" aria-label="Favorito">☆ <span class="hide-sm">Favorito</span></button>
       </div>
     </header>
 
     <section class="promptLayout">
-      <!-- Editor -->
       <section class="promptEditor" aria-label="Prompt editable">
         <div class="promptTitle" id="pTitle">—</div>
         <div class="promptMeta" id="pMeta"></div>
@@ -998,28 +938,19 @@
         </div>
       </section>
 
-      <!-- Sidebar -->
       <aside class="promptInfo" aria-label="Información">
         <div class="infoBlock">
-          <div class="k">Compatible con</div>
-          <div class="compat-list" id="pCompat"></div>
+          <div class="k">ID</div>
+          <div class="v" id="pId" style="font-family:var(--font-mono);font-size:0.8125rem">—</div>
         </div>
-
         <div class="infoBlock">
           <div class="k">Variables</div>
           <div class="vars" id="pVars"></div>
         </div>
-
-        <div class="infoBlock">
-          <div class="k">Formato de salida</div>
-          <div class="v" id="pOut">—</div>
-        </div>
-
         <div class="infoBlock">
           <div class="k">Tags</div>
           <div class="tags" id="pTags"></div>
         </div>
-
         <details class="tcrei">
           <summary>Metodología TCREI</summary>
           <div class="tcrei__body">
@@ -1034,25 +965,35 @@
     </section>
   </main>
 
-  <!-- Toast -->
   <div class="toast" id="toast" aria-live="polite" aria-atomic="true"></div>
 
-  <!-- ══════ APP JS ══════ -->
+  <!-- ══════ APP ══════ -->
   <script>
   (function() {
     'use strict';
 
+    // ─── Config ──────────────────────────
+    const COMPLEXITY_LABELS = { 1: 'Básico', 2: 'Estándar', 3: 'Intermedio', 4: 'Avanzado' };
+    const CAT_ICONS = {
+      'office': '📋', 'comunicacion': '✉️', 'reuniones': '🗓️',
+      'proyectos': '📐', 'datos': '📊', 'it': '💻',
+      'calidad': '✅', 'operaciones_home': '🏠', 'operaciones_road': '🚗',
+      'rrhh': '👥', 'finanzas': '💰', 'legal': '⚖️',
+      'ciberseguridad': '🔒', 'compras': '🛒', 'marketing': '📣'
+    };
+
     // ─── State ───────────────────────────
     let PROMPTS = [];
+    let LANG = localStorage.getItem('cplib_lang') || 'es';
     let FAVORITES = JSON.parse(localStorage.getItem('cplib_favs') || '[]');
-    let activeCategory = null;
-    let activeFilters = { categories: [], levels: [], tags: [] };
+    let activeChipCat = null;
+    let activeFilters = { categories: [], tags: [] };
     let currentPrompt = null;
     let originalPromptText = '';
 
-    // ─── DOM refs ────────────────────────
-    const $ = (s) => document.querySelector(s);
-    const $$ = (s) => document.querySelectorAll(s);
+    // ─── DOM ─────────────────────────────
+    const $ = s => document.querySelector(s);
+    const $$ = s => document.querySelectorAll(s);
     const qInput = $('#q');
     const btnClear = $('#btnClear');
     const grid = $('#grid');
@@ -1062,10 +1003,23 @@
     const pageList = $('#pageList');
     const pagePrompt = $('#pagePrompt');
     const toastEl = $('#toast');
+    const chipRow = $('#chipRow');
+
+    // ─── Helpers ─────────────────────────
+    function t(obj) {
+      if (!obj) return '';
+      if (typeof obj === 'string') return obj;
+      return obj[LANG] || obj['es'] || obj['en'] || '';
+    }
+    function catKey(p) { return p.category?.key || ''; }
+    function catLabel(p) { return t(p.category); }
+    function normalizeStr(s) {
+      return (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    }
 
     // ─── Theme ───────────────────────────
-    const theme = localStorage.getItem('cplib_theme') || 'light';
-    document.documentElement.setAttribute('data-theme', theme);
+    const savedTheme = localStorage.getItem('cplib_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeBtn();
 
     $('#btnTheme').addEventListener('click', () => {
@@ -1074,13 +1028,22 @@
       localStorage.setItem('cplib_theme', next);
       updateThemeBtn();
     });
-
     function updateThemeBtn() {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      $('#btnTheme').innerHTML = isDark
-        ? '☀️ <span class="hide-sm">Claro</span>'
-        : '🌙 <span class="hide-sm">Oscuro</span>';
+      $('#btnTheme').innerHTML = isDark ? '☀️ <span class="hide-sm">Claro</span>' : '🌙 <span class="hide-sm">Oscuro</span>';
     }
+
+    // ─── Language ────────────────────────
+    $$('.langToggle__btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        LANG = btn.dataset.lang;
+        localStorage.setItem('cplib_lang', LANG);
+        $$('.langToggle__btn').forEach(b => b.classList.toggle('active', b.dataset.lang === LANG));
+        rebuildUI();
+      });
+    });
+    // Init active lang btn
+    $$('.langToggle__btn').forEach(b => b.classList.toggle('active', b.dataset.lang === LANG));
 
     // ─── Load Data ───────────────────────
     async function loadData() {
@@ -1088,8 +1051,10 @@
       try {
         const res = await fetch('./prompts.json');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        PROMPTS = await res.json();
-        initApp();
+        const data = await res.json();
+        // Support both flat array and { prompts: [...] } wrapper
+        PROMPTS = Array.isArray(data) ? data : (data.prompts || []);
+        rebuildUI();
       } catch (err) {
         grid.innerHTML = `
           <div class="empty">
@@ -1101,23 +1066,63 @@
       }
     }
 
-    function initApp() {
+    function rebuildUI() {
+      // Update hero text based on lang
+      $('.hero__title').innerHTML = LANG === 'es'
+        ? '¿Qué necesitas <span>hacer hoy</span>?'
+        : 'What do you need to <span>do today</span>?';
+      qInput.placeholder = LANG === 'es'
+        ? 'Buscar: correo, SOP, proveedor, seguridad, QA, Helios…'
+        : 'Search: email, SOP, vendor, security, QA, Helios…';
+
       // Stats
-      const cats = [...new Set(PROMPTS.map(p => p.category))];
+      const catSet = new Set(PROMPTS.map(catKey));
       $('#statTotal').textContent = PROMPTS.length;
-      $('#statCats').textContent = cats.length;
+      $('#statCats').textContent = catSet.size;
+      $('#footerCount').textContent = PROMPTS.length;
       updateFavCount();
 
+      // Build category chips
+      const catEntries = [];
+      const seenKeys = new Set();
+      for (const p of PROMPTS) {
+        const k = catKey(p);
+        if (!seenKeys.has(k)) {
+          seenKeys.add(k);
+          catEntries.push({ key: k, label: catLabel(p) });
+        }
+      }
+      const allLabel = LANG === 'es' ? 'Todos' : 'All';
+      chipRow.innerHTML = `<button class="chip" data-cat="all" type="button"><span class="chip__icon">📋</span> ${allLabel}</button>` +
+        catEntries.map(c => {
+          const icon = CAT_ICONS[c.key] || '📁';
+          return `<button class="chip" data-cat="${c.key}" type="button"><span class="chip__icon">${icon}</span> ${c.label}</button>`;
+        }).join('');
+
+      // Re-bind chip events
+      chipRow.querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const cat = chip.dataset.cat;
+          chipRow.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+          if (activeChipCat === cat) {
+            activeChipCat = null;
+          } else {
+            activeChipCat = cat;
+            chip.classList.add('active');
+          }
+          render();
+        });
+      });
+
       // Build filter panels
-      buildFilterPanel('filterCategories', cats, 'categories');
-      buildFilterPanel('filterLevels', [...new Set(PROMPTS.map(p => p.level))], 'levels');
-      const allTags = [...new Set(PROMPTS.flatMap(p => p.tags || []))].sort();
+      buildFilterPanel('filterCategories', catEntries.map(c => c.label), 'categories');
+      const allTags = [...new Set(PROMPTS.flatMap(p => p.tags || []))].filter(t => t !== 'tcrei').sort();
       buildFilterPanel('filterTags', allTags, 'tags');
 
       render();
     }
 
-    // ─── Filter panels ───────────────────
+    // ─── Filters ─────────────────────────
     function buildFilterPanel(containerId, items, filterKey) {
       const container = $(`#${containerId}`);
       container.innerHTML = items.map(item => `
@@ -1126,7 +1131,6 @@
           ${item}
         </label>
       `).join('');
-
       container.addEventListener('change', (e) => {
         const val = e.target.value;
         const key = e.target.dataset.filterKey;
@@ -1140,110 +1144,96 @@
       });
     }
 
-    // ─── Search ──────────────────────────
-    function normalizeStr(s) {
-      return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-    }
-
+    // ─── Search scoring ──────────────────
     function searchScore(prompt, query) {
       if (!query) return 1;
       const q = normalizeStr(query);
       const words = q.split(/\s+/).filter(Boolean);
       let score = 0;
 
-      const title = normalizeStr(prompt.title);
-      const cat = normalizeStr(prompt.category);
+      const title = normalizeStr(t(prompt.title));
+      const cat = normalizeStr(catLabel(prompt));
+      const catK = normalizeStr(catKey(prompt));
       const tags = (prompt.tags || []).map(normalizeStr);
-      const text = normalizeStr(prompt.prompt || '');
+      const text = normalizeStr(t(prompt.prompt));
+      const vars = (prompt.variables || []).map(normalizeStr);
+      const id = normalizeStr(prompt.id || '');
 
       for (const w of words) {
+        if (id.includes(w)) score += 12;
         if (title.includes(w)) score += 10;
         if (title.startsWith(w)) score += 5;
-        if (cat.includes(w)) score += 6;
-        if (tags.some(t => t.includes(w))) score += 8;
+        if (catK.includes(w) || cat.includes(w)) score += 6;
+        if (tags.some(tg => tg.includes(w))) score += 8;
+        if (vars.some(v => v.includes(w))) score += 4;
         if (text.includes(w)) score += 2;
       }
-
-      // Bonus for exact phrase match in title
       if (title.includes(q)) score += 15;
-
       return score;
     }
 
-    // ─── Render Grid ─────────────────────
+    // ─── Render ──────────────────────────
     function render() {
       const query = qInput.value.trim();
       let results = PROMPTS.map(p => ({ ...p, _score: searchScore(p, query) }));
 
-      // Filter by search
-      if (query) {
-        results = results.filter(p => p._score > 0);
+      if (query) results = results.filter(p => p._score > 0);
+      if (activeChipCat && activeChipCat !== 'all') {
+        results = results.filter(p => catKey(p) === activeChipCat);
       }
-
-      // Filter by active chip category
-      if (activeCategory && activeCategory !== 'all') {
-        results = results.filter(p => p.category === activeCategory);
-      }
-
-      // Filter by dropdowns
       if (activeFilters.categories.length) {
-        results = results.filter(p => activeFilters.categories.includes(p.category));
-      }
-      if (activeFilters.levels.length) {
-        results = results.filter(p => activeFilters.levels.includes(p.level));
+        results = results.filter(p => activeFilters.categories.includes(catLabel(p)));
       }
       if (activeFilters.tags.length) {
-        results = results.filter(p => (p.tags || []).some(t => activeFilters.tags.includes(t)));
+        results = results.filter(p => (p.tags || []).some(tg => activeFilters.tags.includes(tg)));
       }
 
-      // Filter favorites
       const showFavs = $('#btnFavorites').classList.contains('active');
-      if (showFavs) {
-        results = results.filter(p => FAVORITES.includes(p.id));
-      }
+      if (showFavs) results = results.filter(p => FAVORITES.includes(p.id));
 
       // Sort
-      const sortVal = sortSelect.value;
-      if (sortVal === 'relevance' && query) {
+      const sv = sortSelect.value;
+      if (sv === 'relevance' && query) {
         results.sort((a, b) => b._score - a._score);
-      } else if (sortVal === 'title_asc') {
-        results.sort((a, b) => a.title.localeCompare(b.title, 'es'));
-      } else if (sortVal === 'title_desc') {
-        results.sort((a, b) => b.title.localeCompare(a.title, 'es'));
-      } else if (sortVal === 'newest') {
-        results.sort((a, b) => (b.created || '').localeCompare(a.created || ''));
+      } else if (sv === 'title_asc') {
+        results.sort((a, b) => t(a.title).localeCompare(t(b.title), LANG));
+      } else if (sv === 'title_desc') {
+        results.sort((a, b) => t(b.title).localeCompare(t(a.title), LANG));
+      } else if (sv === 'id_asc') {
+        results.sort((a, b) => (a.id || '').localeCompare(b.id || ''));
+      } else if (sv === 'id_desc') {
+        results.sort((a, b) => (b.id || '').localeCompare(a.id || ''));
       }
 
-      // Update state indicators
-      const activeChips = [];
-      if (query) activeChips.push(`"${query}"`);
-      if (activeCategory && activeCategory !== 'all') activeChips.push(activeCategory);
-      if (activeFilters.categories.length) activeChips.push(...activeFilters.categories);
-      if (activeFilters.levels.length) activeChips.push(...activeFilters.levels);
-      if (showFavs) activeChips.push('Favoritos');
+      // Badge
+      const active = [];
+      if (query) active.push(`"${query}"`);
+      if (activeChipCat && activeChipCat !== 'all') {
+        const lbl = PROMPTS.find(p => catKey(p) === activeChipCat);
+        active.push(lbl ? catLabel(lbl) : activeChipCat);
+      }
+      if (activeFilters.categories.length) active.push(...activeFilters.categories);
+      if (showFavs) active.push('⭐ Favoritos');
+      badgeState.textContent = active.length ? active.join(' · ') : (LANG === 'es' ? 'Todos los prompts' : 'All prompts');
+      countState.textContent = `${results.length} / ${PROMPTS.length}`;
 
-      badgeState.textContent = activeChips.length > 0 ? activeChips.join(' · ') : 'Todos los prompts';
-      countState.textContent = `${results.length} de ${PROMPTS.length}`;
-
-      // Render cards
       if (results.length === 0) {
         grid.innerHTML = `
           <div class="empty">
             <div class="empty__icon">🔍</div>
-            <div class="empty__title">Sin resultados</div>
-            <div class="empty__sub">Intenta con otros términos o limpia los filtros.</div>
+            <div class="empty__title">${LANG === 'es' ? 'Sin resultados' : 'No results'}</div>
+            <div class="empty__sub">${LANG === 'es' ? 'Intenta con otros términos o limpia los filtros.' : 'Try different terms or clear filters.'}</div>
           </div>`;
         return;
       }
 
       grid.innerHTML = results.map(p => {
-        const levelClass = normalizeStr(p.level).replace('á','a').replace('é','e');
+        const cx = p.complexity || 2;
+        const cxLabel = COMPLEXITY_LABELS[cx] || 'Estándar';
         const isFav = FAVORITES.includes(p.id);
-        const preview = (p.prompt || '').substring(0, 120).replace(/\n/g, ' ') + '…';
-        const compatDots = (p.compatible || []).map(c => {
-          const name = c.charAt(0).toUpperCase() + c.slice(1);
-          return `<span class="compat-dot" title="${name}"></span>`;
-        }).join('');
+        const promptText = t(p.prompt) || '';
+        const preview = promptText.replace(/\*\*/g, '').replace(/\n/g, ' ').substring(0, 100) + '…';
+        const displayTags = (p.tags || []).filter(tg => tg !== 'tcrei').slice(0, 3);
 
         return `
         <article class="card" data-id="${p.id}" tabindex="0">
@@ -1251,30 +1241,28 @@
             ${isFav ? '⭐' : '☆'}
           </button>
           <div class="card__top">
-            <span class="card__cat">${p.category}</span>
-            <span class="card__level card__level--${levelClass}">
-              <span class="card__dot card__dot--${levelClass}"></span>
-              ${p.level}
+            <span class="card__cat">${catLabel(p)}</span>
+            <span class="card__complexity card__complexity--${cx}">
+              <span class="card__dot card__dot--${cx}"></span>
+              ${cxLabel}
             </span>
           </div>
-          <div class="card__title">${highlightMatch(p.title, qInput.value.trim())}</div>
+          <div class="card__title">${highlightMatch(t(p.title), query)}</div>
           <div class="card__preview">${preview}</div>
           <div class="card__bottom">
             <div class="card__tags">
-              ${(p.tags || []).slice(0, 3).map(t => `<span class="card__tag">${t}</span>`).join('')}
+              ${displayTags.map(tg => `<span class="card__tag">${tg}</span>`).join('')}
             </div>
-            <div class="card__compat">${compatDots}</div>
+            <span class="card__id">${p.id}</span>
           </div>
         </article>`;
       }).join('');
 
-      // Card click handlers
+      // Events
       grid.querySelectorAll('.card').forEach(card => {
         card.addEventListener('click', () => openPrompt(card.dataset.id));
-        card.addEventListener('keydown', (e) => { if (e.key === 'Enter') openPrompt(card.dataset.id); });
+        card.addEventListener('keydown', e => { if (e.key === 'Enter') openPrompt(card.dataset.id); });
       });
-
-      // Fav button handlers
       grid.querySelectorAll('[data-fav]').forEach(btn => {
         btn.addEventListener('click', () => toggleFav(btn.dataset.fav));
       });
@@ -1286,59 +1274,47 @@
       const idx = normalizeStr(text).indexOf(q);
       if (idx === -1) return text;
       return text.substring(0, idx) +
-        '<mark style="background:var(--brand-soft);color:var(--brand);border-radius:2px;padding:0 2px;">' +
-        text.substring(idx, idx + query.length) +
-        '</mark>' +
+        '<mark>' + text.substring(idx, idx + query.length) + '</mark>' +
         text.substring(idx + query.length);
     }
 
-    // ─── Prompt Detail ───────────────────
+    // ─── Detail ──────────────────────────
     function openPrompt(id) {
       const p = PROMPTS.find(pr => pr.id === id);
       if (!p) return;
       currentPrompt = p;
-      originalPromptText = p.prompt || '';
+      const promptText = t(p.prompt) || '';
+      originalPromptText = promptText;
 
       pageList.classList.add('page--hidden');
       pagePrompt.classList.remove('page--hidden');
       window.scrollTo(0, 0);
 
-      $('#pTitle').textContent = p.title;
+      $('#pTitle').textContent = t(p.title);
+      $('#pId').textContent = p.id;
 
-      // Meta
-      const levelClass = normalizeStr(p.level).replace('á','a').replace('é','e');
+      const cx = p.complexity || 2;
+      const cxLabel = COMPLEXITY_LABELS[cx] || 'Estándar';
       $('#pMeta').innerHTML = `
-        <span class="promptMeta__item"><span class="card__level card__level--${levelClass}"><span class="card__dot card__dot--${levelClass}"></span> ${p.level}</span></span>
-        <span class="promptMeta__item" style="color:var(--brand);font-weight:600">${p.category}</span>
-        <span class="promptMeta__item">${p.output_format || '—'}</span>
+        <span class="promptMeta__item">
+          <span class="card__complexity card__complexity--${cx}"><span class="card__dot card__dot--${cx}"></span> ${cxLabel}</span>
+        </span>
+        <span class="promptMeta__item" style="color:var(--brand);font-weight:600">${catLabel(p)}</span>
       `;
 
-      // Textarea
-      $('#pText').value = p.prompt || '';
-
-      // Compatibility
-      const compatMap = { gemini: 'Gemini', claude: 'Claude', chatgpt: 'ChatGPT' };
-      $('#pCompat').innerHTML = (p.compatible || []).map(c => `
-        <span class="compat-badge compat-badge--${c}">
-          <span class="compat-badge__dot"></span> ${compatMap[c] || c}
-        </span>
-      `).join('');
+      $('#pText').value = promptText;
 
       // Variables
-      $('#pVars').innerHTML = (p.variables || []).length > 0
-        ? p.variables.map(v => `<span class="var-chip">${v}</span>`).join('')
-        : '<span class="muted">Sin variables</span>';
-
-      // Output
-      $('#pOut').textContent = p.output_format || '—';
+      const vars = p.variables || [];
+      $('#pVars').innerHTML = vars.length > 0
+        ? vars.map(v => `<span class="var-chip">{{${v}}}</span>`).join('')
+        : `<span class="muted">${LANG === 'es' ? 'Sin variables' : 'No variables'}</span>`;
 
       // Tags
-      $('#pTags').innerHTML = (p.tags || []).map(t => `<span class="tag-item">${t}</span>`).join('');
+      const displayTags = (p.tags || []).filter(tg => tg !== 'tcrei');
+      $('#pTags').innerHTML = displayTags.map(tg => `<span class="tag-item">${tg}</span>`).join('');
 
-      // Fav toggle
       updateFavToggle(id);
-
-      // Save to recents
       saveRecent(id);
     }
 
@@ -1353,10 +1329,10 @@
       const idx = FAVORITES.indexOf(id);
       if (idx > -1) {
         FAVORITES.splice(idx, 1);
-        toast('Eliminado de favoritos');
+        toast(LANG === 'es' ? 'Eliminado de favoritos' : 'Removed from favorites');
       } else {
         FAVORITES.push(id);
-        toast('Guardado en favoritos ⭐');
+        toast(LANG === 'es' ? 'Guardado en favoritos ⭐' : 'Saved to favorites ⭐');
       }
       localStorage.setItem('cplib_favs', JSON.stringify(FAVORITES));
       updateFavCount();
@@ -1367,9 +1343,7 @@
     function updateFavToggle(id) {
       const isFav = FAVORITES.includes(id);
       const btn = $('#btnFavToggle');
-      btn.innerHTML = isFav
-        ? '⭐ <span class="hide-sm">Favorito</span>'
-        : '☆ <span class="hide-sm">Favorito</span>';
+      btn.innerHTML = isFav ? '⭐ <span class="hide-sm">Favorito</span>' : '☆ <span class="hide-sm">Favorito</span>';
       btn.classList.toggle('active', isFav);
     }
 
@@ -1377,21 +1351,19 @@
       $('#statFavs').textContent = FAVORITES.length;
     }
 
-    // ─── Recents ─────────────────────────
     function saveRecent(id) {
       let recents = JSON.parse(localStorage.getItem('cplib_recents') || '[]');
       recents = recents.filter(r => r !== id);
       recents.unshift(id);
-      recents = recents.slice(0, 10);
-      localStorage.setItem('cplib_recents', JSON.stringify(recents));
+      localStorage.setItem('cplib_recents', JSON.stringify(recents.slice(0, 20)));
     }
 
     // ─── Toast ───────────────────────────
     function toast(msg) {
       toastEl.textContent = msg;
       toastEl.classList.add('show');
-      clearTimeout(toastEl._timeout);
-      toastEl._timeout = setTimeout(() => toastEl.classList.remove('show'), 2200);
+      clearTimeout(toastEl._t);
+      toastEl._t = setTimeout(() => toastEl.classList.remove('show'), 2200);
     }
 
     // ─── Copy ────────────────────────────
@@ -1399,23 +1371,20 @@
       const text = $('#pText').value;
       try {
         await navigator.clipboard.writeText(text);
-        toast('Prompt copiado al portapapeles ✓');
+        toast(LANG === 'es' ? 'Prompt copiado ✓' : 'Prompt copied ✓');
       } catch {
-        // Fallback
         const ta = document.createElement('textarea');
         ta.value = text;
-        ta.style.position = 'fixed';
-        ta.style.opacity = '0';
+        ta.style.cssText = 'position:fixed;opacity:0';
         document.body.appendChild(ta);
         ta.select();
         document.execCommand('copy');
         document.body.removeChild(ta);
-        toast('Prompt copiado (fallback) ✓');
+        toast(LANG === 'es' ? 'Prompt copiado (fallback) ✓' : 'Prompt copied (fallback) ✓');
       }
     }
 
-    // ─── Event Listeners ─────────────────
-    // Search
+    // ─── Events ──────────────────────────
     qInput.addEventListener('input', () => {
       btnClear.classList.toggle('visible', qInput.value.length > 0);
       render();
@@ -1427,65 +1396,42 @@
       render();
     });
 
-    // Chips
-    $$('.chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        const cat = chip.dataset.cat;
-        // Toggle active
-        $$('.chip').forEach(c => c.classList.remove('active'));
-        if (activeCategory === cat) {
-          activeCategory = null;
-        } else {
-          activeCategory = cat;
-          chip.classList.add('active');
-        }
-        render();
-      });
-    });
-
-    // Sort
     sortSelect.addEventListener('change', render);
 
-    // Reset filters
     $('#btnResetFilters').addEventListener('click', () => {
-      activeFilters = { categories: [], levels: [], tags: [] };
-      activeCategory = null;
+      activeFilters = { categories: [], tags: [] };
+      activeChipCat = null;
       qInput.value = '';
       btnClear.classList.remove('visible');
-      $$('.chip').forEach(c => c.classList.remove('active'));
+      chipRow.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
       $$('.filter__option input').forEach(cb => { cb.checked = false; });
       $$('.filter__option').forEach(opt => opt.classList.remove('checked'));
-      // Close filter details
       $$('.filter').forEach(d => d.removeAttribute('open'));
       render();
     });
 
-    // Favorites toggle
     $('#btnFavorites').addEventListener('click', () => {
       $('#btnFavorites').classList.toggle('active');
       render();
     });
 
-    // Detail page
     $('#btnBack').addEventListener('click', closePrompt);
     $('#btnCopy').addEventListener('click', copyPrompt);
     $('#btnReset').addEventListener('click', () => {
       if (currentPrompt) {
         $('#pText').value = originalPromptText;
-        toast('Prompt restaurado');
+        toast(LANG === 'es' ? 'Prompt restaurado' : 'Prompt restored');
       }
     });
     $('#btnFavToggle').addEventListener('click', () => {
       if (currentPrompt) toggleFav(currentPrompt.id);
     });
 
-    // Keyboard shortcut: Escape to go back
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && currentPrompt) closePrompt();
     });
 
-    // Close filter dropdowns when clicking outside
-    document.addEventListener('click', (e) => {
+    document.addEventListener('click', e => {
       $$('.filter').forEach(d => {
         if (!d.contains(e.target)) d.removeAttribute('open');
       });
@@ -1493,7 +1439,6 @@
 
     // ─── Init ────────────────────────────
     loadData();
-
   })();
   </script>
 </body>
