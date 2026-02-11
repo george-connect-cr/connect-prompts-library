@@ -5,11 +5,860 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Connect · Prompt Library</title>
   <meta name="description" content="Repositorio interno de prompts para Connect. Encuentra y copia prompts en segundos." />
-  <link rel="preconnect" href="https://cdn.prod.website-files.com" crossorigin>
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════
+       DESIGN TOKENS
+       ═══════════════════════════════════════════ */
+    :root {
+      --brand: #FF6347;
+      --brand-soft: #FF634720;
+      --brand-hover: #E8553A;
+      --bg-base: #FAFAF9;
+      --bg-surface: #FFFFFF;
+      --bg-surface-hover: #F5F5F4;
+      --bg-elevated: #FFFFFF;
+      --bg-inset: #F0EFED;
+      --border: #E7E5E4;
+      --border-subtle: #F0EFED;
+      --text-primary: #1C1917;
+      --text-secondary: #78716C;
+      --text-tertiary: #A8A29E;
+      --text-inverse: #FFFFFF;
+      --shadow-sm: 0 1px 2px rgba(28,25,23,0.04);
+      --shadow-md: 0 4px 12px rgba(28,25,23,0.06);
+      --shadow-lg: 0 12px 40px rgba(28,25,23,0.10);
+      --shadow-xl: 0 24px 60px rgba(28,25,23,0.14);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+      --level-basico: #10B981;
+      --level-intermedio: #F59E0B;
+      --level-avanzado: #EF4444;
+      --gemini: #4285F4;
+      --claude: #D97706;
+      --chatgpt: #10A37F;
+      --toast-bg: #1C1917;
+    }
+
+    [data-theme="dark"] {
+      --bg-base: #0C0A09;
+      --bg-surface: #1C1917;
+      --bg-surface-hover: #292524;
+      --bg-elevated: #1C1917;
+      --bg-inset: #0C0A09;
+      --border: #292524;
+      --border-subtle: #1C1917;
+      --text-primary: #FAFAF9;
+      --text-secondary: #A8A29E;
+      --text-tertiary: #78716C;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.4);
+      --shadow-xl: 0 24px 60px rgba(0,0,0,0.5);
+      --brand-soft: #FF634730;
+      --toast-bg: #FAFAF9;
+    }
+    [data-theme="dark"] .toast { color: #1C1917; }
+
+    /* ═══════════════════════════════════════════
+       RESET & BASE
+       ═══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    button { cursor: pointer; font-family: inherit; }
+    input, select, textarea { font-family: inherit; }
+
+    /* ═══════════════════════════════════════════
+       TOPBAR
+       ═══════════════════════════════════════════ */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .topbar__inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .brand__logo {
+      height: 28px;
+      width: auto;
+      filter: var(--logo-filter, none);
+    }
+    [data-theme="dark"] .brand__logo {
+      filter: brightness(0) invert(1);
+    }
+    .brand__divider {
+      width: 1px;
+      height: 24px;
+      background: var(--border);
+    }
+    .brand__meta { display: flex; flex-direction: column; gap: 0; }
+    .brand__title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+    .brand__sub {
+      font-size: 0.65rem;
+      color: var(--text-tertiary);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .topbar__actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .iconbtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.5rem 0.75rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .iconbtn:hover {
+      background: var(--bg-surface-hover);
+      color: var(--text-primary);
+      border-color: var(--text-tertiary);
+    }
+    .iconbtn.active {
+      background: var(--brand-soft);
+      border-color: var(--brand);
+      color: var(--brand);
+    }
+    .hide-sm { display: inline; }
+    @media (max-width: 640px) {
+      .hide-sm { display: none; }
+      .iconbtn { padding: 0.5rem; }
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO / SEARCH
+       ═══════════════════════════════════════════ */
+    .hero {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 1.25rem 1.5rem;
+      text-align: center;
+    }
+    .hero__title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .hero__title span {
+      background: linear-gradient(135deg, var(--brand) 0%, #FF8A65 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .searchRow {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+    .searchInput {
+      width: 100%;
+      padding: 0.875rem 1.25rem;
+      padding-right: 3rem;
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      font-size: 0.9375rem;
+      color: var(--text-primary);
+      outline: none;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .searchInput::placeholder { color: var(--text-tertiary); }
+    .searchInput:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px var(--brand-soft), var(--shadow-md);
+    }
+    .searchClear {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-tertiary);
+      font-size: 1.25rem;
+      padding: 0.25rem;
+      display: none;
+      transition: color 0.15s;
+    }
+    .searchClear:hover { color: var(--text-primary); }
+    .searchClear.visible { display: block; }
+
+    /* Chips */
+    .chipRow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.4375rem 0.875rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .chip:hover {
+      border-color: var(--brand);
+      color: var(--brand);
+      background: var(--brand-soft);
+    }
+    .chip.active {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: white;
+    }
+    .chip__icon { font-size: 1rem; line-height: 1; }
+
+    /* Stats bar */
+    .statsBar {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 0.75rem 0;
+      margin-bottom: 0.5rem;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat__num {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--brand);
+      line-height: 1;
+    }
+    .stat__label {
+      font-size: 0.6875rem;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+    }
+
+    /* ═══════════════════════════════════════════
+       FILTERS
+       ═══════════════════════════════════════════ */
+    .filtersWrap {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+    .filters {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .filters__left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .filter {
+      position: relative;
+    }
+    .filter > summary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.4375rem 0.75rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      list-style: none;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .filter > summary::-webkit-details-marker { display: none; }
+    .filter > summary::after { content: '▾'; margin-left: 0.25rem; font-size: 0.7em; }
+    .filter > summary:hover {
+      border-color: var(--text-tertiary);
+      color: var(--text-primary);
+    }
+    .filter[open] > summary {
+      border-color: var(--brand);
+      color: var(--brand);
+    }
+    .filter__panel {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.5rem;
+      min-width: 180px;
+      max-height: 260px;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      z-index: 50;
+      animation: dropIn 0.15s ease;
+    }
+    @keyframes dropIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .filter__option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4375rem 0.625rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+    .filter__option:hover { background: var(--bg-surface-hover); }
+    .filter__option input {
+      accent-color: var(--brand);
+      margin: 0;
+    }
+    .filter__option.checked { color: var(--text-primary); font-weight: 500; }
+    .filters__right { display: flex; align-items: center; gap: 0.5rem; }
+    .select {
+      padding: 0.4375rem 0.75rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      outline: none;
+      cursor: pointer;
+    }
+    .link {
+      background: none;
+      border: none;
+      color: var(--brand);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      padding: 0.375rem 0.625rem;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+    }
+    .link:hover { background: var(--brand-soft); }
+
+    /* ═══════════════════════════════════════════
+       GRID HEADER & COUNT
+       ═══════════════════════════════════════════ */
+    .gridWrap {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+    .gridHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0 0.75rem;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.625rem;
+      background: var(--bg-inset);
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    .muted { font-size: 0.8125rem; color: var(--text-tertiary); }
+
+    /* ═══════════════════════════════════════════
+       PROMPT CARDS GRID
+       ═══════════════════════════════════════════ */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 0.875rem;
+      padding-bottom: 3rem;
+    }
+    @media (max-width: 640px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      position: relative;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .card:hover {
+      border-color: var(--text-tertiary);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
+    }
+    .card__top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .card__cat {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+      color: var(--brand);
+    }
+    .card__level {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.125rem 0.5rem;
+      border-radius: 100px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .card__level--basico { background: #10B98118; color: var(--level-basico); }
+    .card__level--intermedio { background: #F59E0B18; color: var(--level-intermedio); }
+    .card__level--avanzado { background: #EF444418; color: var(--level-avanzado); }
+    .card__dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .card__dot--basico { background: var(--level-basico); }
+    .card__dot--intermedio { background: var(--level-intermedio); }
+    .card__dot--avanzado { background: var(--level-avanzado); }
+
+    .card__title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+    .card__preview {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 0.5rem;
+    }
+    .card__tags {
+      display: flex;
+      gap: 0.375rem;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+    .card__tag {
+      font-size: 0.6875rem;
+      padding: 0.125rem 0.5rem;
+      background: var(--bg-inset);
+      border-radius: 100px;
+      color: var(--text-tertiary);
+      font-weight: 500;
+    }
+    .card__compat {
+      display: flex;
+      gap: 0.25rem;
+      flex-shrink: 0;
+    }
+    .compat-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      opacity: 0.8;
+    }
+    .compat-dot[title="Gemini"] { background: var(--gemini); }
+    .compat-dot[title="Claude"] { background: var(--claude); }
+    .compat-dot[title="ChatGPT"] { background: var(--chatgpt); }
+
+    .card__fav {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      font-size: 1rem;
+      opacity: 0;
+      transition: opacity 0.15s;
+      padding: 0.25rem;
+    }
+    .card:hover .card__fav { opacity: 0.5; }
+    .card__fav:hover { opacity: 1 !important; }
+    .card__fav.is-fav { opacity: 1; }
+
+    /* ═══════════════════════════════════════════
+       PROMPT DETAIL VIEW
+       ═══════════════════════════════════════════ */
+    .page { display: block; }
+    .page--hidden { display: none; }
+
+    .promptTop {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .promptLayout {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 1.25rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 2rem;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .promptLayout {
+        grid-template-columns: 1fr;
+      }
+    }
+    .promptEditor {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .promptTitle {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+    .promptMeta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .promptMeta__item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+    }
+    .promptTextarea {
+      width: 100%;
+      min-height: 340px;
+      padding: 1.25rem;
+      background: var(--bg-inset);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      line-height: 1.7;
+      color: var(--text-primary);
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .promptTextarea:focus {
+      border-color: var(--brand);
+    }
+    .promptActions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      padding: 0.625rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: var(--bg-surface);
+      transition: all 0.2s ease;
+    }
+    .btn:hover {
+      border-color: var(--text-tertiary);
+      color: var(--text-primary);
+    }
+    .btn--primary {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: white;
+    }
+    .btn--primary:hover {
+      background: var(--brand-hover);
+      border-color: var(--brand-hover);
+      color: white;
+    }
+
+    /* Sidebar info */
+    .promptInfo {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      position: sticky;
+      top: 80px;
+    }
+    .infoBlock {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .k {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+      color: var(--text-tertiary);
+    }
+    .v { font-size: 0.875rem; color: var(--text-secondary); }
+    .vars { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+    .var-chip {
+      display: inline-flex;
+      padding: 0.25rem 0.625rem;
+      background: var(--brand-soft);
+      border: 1px solid var(--brand);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--brand);
+      font-weight: 500;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+    .tag-item {
+      font-size: 0.75rem;
+      padding: 0.1875rem 0.5rem;
+      background: var(--bg-inset);
+      border-radius: 100px;
+      color: var(--text-tertiary);
+      font-weight: 500;
+    }
+    .compat-list {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .compat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .compat-badge--gemini { background: #4285F418; color: var(--gemini); }
+    .compat-badge--claude { background: #D9770618; color: var(--claude); }
+    .compat-badge--chatgpt { background: #10A37F18; color: var(--chatgpt); }
+    .compat-badge__dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+    .compat-badge--gemini .compat-badge__dot { background: var(--gemini); }
+    .compat-badge--claude .compat-badge__dot { background: var(--claude); }
+    .compat-badge--chatgpt .compat-badge__dot { background: var(--chatgpt); }
+
+    /* TCREI info */
+    .tcrei {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .tcrei > summary {
+      padding: 0.75rem 1rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      list-style: none;
+      transition: background 0.15s;
+    }
+    .tcrei > summary::-webkit-details-marker { display: none; }
+    .tcrei > summary::before { content: '📐 '; }
+    .tcrei > summary:hover { background: var(--bg-surface-hover); }
+    .tcrei__body {
+      padding: 0 1rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .tcrei__body div {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .tcrei__body strong { color: var(--brand); }
+
+    /* ═══════════════════════════════════════════
+       TOAST
+       ═══════════════════════════════════════════ */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      background: var(--toast-bg);
+      color: var(--text-inverse);
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      font-weight: 500;
+      box-shadow: var(--shadow-xl);
+      z-index: 200;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ═══════════════════════════════════════════
+       EMPTY STATE
+       ═══════════════════════════════════════════ */
+    .empty {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--text-tertiary);
+    }
+    .empty__icon { font-size: 3rem; margin-bottom: 1rem; }
+    .empty__title { font-size: 1.125rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .empty__sub { font-size: 0.875rem; }
+
+    /* Footer */
+    .footerNote {
+      text-align: center;
+      padding: 1.5rem 0 2rem;
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+    }
+    .footerNote code {
+      background: var(--bg-inset);
+      padding: 0.125rem 0.375rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
+
+    /* ═══════════════════════════════════════════
+       ANIMATIONS
+       ═══════════════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .card { animation: fadeUp 0.3s ease both; }
+    .card:nth-child(2) { animation-delay: 0.03s; }
+    .card:nth-child(3) { animation-delay: 0.06s; }
+    .card:nth-child(4) { animation-delay: 0.09s; }
+    .card:nth-child(5) { animation-delay: 0.12s; }
+    .card:nth-child(6) { animation-delay: 0.15s; }
+
+    /* Focus visible */
+    :focus-visible {
+      outline: 2px solid var(--brand);
+      outline-offset: 2px;
+    }
+
+    /* Loading skeleton */
+    .skeleton {
+      background: linear-gradient(90deg, var(--bg-inset) 25%, var(--bg-surface-hover) 50%, var(--bg-inset) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: var(--radius-sm);
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+  </style>
 </head>
 
 <body>
+  <!-- ══════ TOPBAR ══════ -->
   <header class="topbar">
     <div class="topbar__inner">
       <div class="brand" role="banner" aria-label="Connect Prompt Library">
@@ -18,9 +867,10 @@
           src="https://cdn.prod.website-files.com/64b580afe0544a5492bb37b7/64b580afe0544a5492bb389f_logo-completo.svg"
           alt="Connect"
         />
+        <div class="brand__divider"></div>
         <div class="brand__meta">
           <div class="brand__title">Prompt Library</div>
-          <div class="brand__sub">Asistencia extraordinaria</div>
+          <div class="brand__sub">Herramientas de IA</div>
         </div>
       </div>
 
@@ -29,112 +879,132 @@
           ⭐ <span class="hide-sm">Favoritos</span>
         </button>
         <button class="iconbtn" id="btnTheme" type="button" aria-label="Cambiar tema">
-          🌗 <span class="hide-sm">Tema</span>
+          🌙 <span class="hide-sm">Tema</span>
         </button>
       </div>
     </div>
   </header>
 
+  <!-- ══════ LIST PAGE ══════ -->
   <main class="page" id="pageList">
+    <!-- Hero -->
     <section class="hero" aria-label="Búsqueda principal">
-      <h1 class="hero__title">¿Qué necesitas hacer hoy?</h1>
+      <h1 class="hero__title">¿Qué necesitas <span>hacer hoy</span>?</h1>
 
       <div class="searchRow">
         <input
           id="q"
           class="searchInput"
           type="search"
-          placeholder="Buscar: correo, informe, proveedor, incidente, QA, Helios…"
+          placeholder="Buscar prompts: correo, informe, proveedor, Helios…"
           autocomplete="off"
+          autofocus
         />
-        <button class="btn btn--primary" id="btnClear" type="button">Limpiar</button>
+        <button class="searchClear" id="btnClear" type="button" aria-label="Limpiar búsqueda">✕</button>
       </div>
 
-      <div class="chipRow" aria-label="Atajos">
-        <button class="chip" data-task="Correo" type="button">Correo</button>
-        <button class="chip" data-task="Informes" type="button">Informes</button>
-        <button class="chip" data-task="Reuniones" type="button">Reuniones</button>
-        <button class="chip" data-task="Análisis" type="button">Análisis</button>
-        <button class="chip" data-task="IT" type="button">IT</button>
-        <button class="chip" data-task="RRHH" type="button">RRHH</button>
+      <div class="chipRow" aria-label="Categorías rápidas">
+        <button class="chip" data-cat="all" type="button"><span class="chip__icon">📋</span> Todos</button>
+        <button class="chip" data-cat="Productividad" type="button"><span class="chip__icon">🎯</span> Productividad</button>
+        <button class="chip" data-cat="Comunicación" type="button"><span class="chip__icon">✉️</span> Comunicación</button>
+        <button class="chip" data-cat="Atención al Cliente" type="button"><span class="chip__icon">🤝</span> Atención</button>
+        <button class="chip" data-cat="Análisis" type="button"><span class="chip__icon">📊</span> Análisis</button>
+        <button class="chip" data-cat="IT" type="button"><span class="chip__icon">💻</span> IT</button>
+        <button class="chip" data-cat="RRHH" type="button"><span class="chip__icon">👥</span> RRHH</button>
+        <button class="chip" data-cat="Marketing" type="button"><span class="chip__icon">📣</span> Marketing</button>
+        <button class="chip" data-cat="Operaciones" type="button"><span class="chip__icon">⚙️</span> Operaciones</button>
       </div>
 
-      <section class="recents" aria-label="Recientes">
-        <div class="sectionTitle">
-          <span>Recientes</span>
-          <button class="link" id="btnShowRecents" type="button">Ver</button>
+      <div class="statsBar" id="statsBar">
+        <div class="stat">
+          <div class="stat__num" id="statTotal">—</div>
+          <div class="stat__label">Prompts</div>
         </div>
-        <div class="recentCards" id="recentCards"></div>
+        <div class="stat">
+          <div class="stat__num" id="statCats">—</div>
+          <div class="stat__label">Categorías</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num" id="statFavs">0</div>
+          <div class="stat__label">Favoritos</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filters -->
+    <div class="filtersWrap">
+      <section class="filters" aria-label="Filtros">
+        <div class="filters__left">
+          <details class="filter" id="filterCatWrap">
+            <summary>Categoría</summary>
+            <div class="filter__panel" id="filterCategories"></div>
+          </details>
+
+          <details class="filter" id="filterLevelWrap">
+            <summary>Nivel</summary>
+            <div class="filter__panel" id="filterLevels"></div>
+          </details>
+
+          <details class="filter" id="filterTagWrap">
+            <summary>Tags</summary>
+            <div class="filter__panel" id="filterTags"></div>
+          </details>
+
+          <button class="link" id="btnResetFilters" type="button">Limpiar filtros</button>
+        </div>
+
+        <div class="filters__right">
+          <select id="sort" class="select" aria-label="Ordenar">
+            <option value="relevance">Relevancia</option>
+            <option value="title_asc">Título A→Z</option>
+            <option value="title_desc">Título Z→A</option>
+            <option value="newest">Más nuevos</option>
+          </select>
+        </div>
       </section>
-    </section>
+    </div>
 
-    <section class="filters" aria-label="Filtros">
-      <div class="filters__left">
-        <details class="filter">
-          <summary>Categoría</summary>
-          <div class="filter__panel" id="filterCategories"></div>
-        </details>
-
-        <details class="filter">
-          <summary>Nivel</summary>
-          <div class="filter__panel" id="filterLevels"></div>
-        </details>
-
-        <details class="filter">
-          <summary>Tags</summary>
-          <div class="filter__panel" id="filterTags"></div>
-        </details>
-
-        <button class="link" id="btnResetFilters" type="button">Reset</button>
-      </div>
-
-      <div class="filters__right">
-        <select id="sort" class="select" aria-label="Ordenar">
-          <option value="relevance">Relevancia</option>
-          <option value="title_asc">Título A→Z</option>
-          <option value="title_desc">Título Z→A</option>
-          <option value="newest">Más nuevos</option>
-        </select>
-      </div>
-    </section>
-
+    <!-- Grid -->
     <section class="gridWrap" aria-label="Prompts">
       <div class="gridHeader">
-        <div class="badge" id="badgeState">Sin filtros</div>
+        <div class="badge" id="badgeState">Todos los prompts</div>
         <div class="muted" id="countState">—</div>
       </div>
-
       <div class="grid" id="grid"></div>
-
       <div class="footerNote">
-        <span class="muted">Carga desde</span> <code>./prompts.json</code>
-        <span class="muted"> · Si ves 0 prompts, revisa que el archivo exista en la raíz del repo.</span>
+        Carga desde <code>./prompts.json</code> · Connect Prompt Library v2.0
       </div>
     </section>
   </main>
 
+  <!-- ══════ PROMPT DETAIL PAGE ══════ -->
   <main class="page page--hidden" id="pagePrompt" aria-label="Detalle de prompt">
     <header class="promptTop">
-      <button class="link" id="btnBack" type="button">← Volver</button>
-      <div class="promptTop__right">
-        <button class="iconbtn" id="btnFavToggle" type="button" aria-label="Guardar">☆</button>
+      <button class="link" id="btnBack" type="button">← Volver a la librería</button>
+      <div style="display:flex;gap:0.5rem;align-items:center">
+        <button class="iconbtn" id="btnFavToggle" type="button" aria-label="Guardar en favoritos">☆ <span class="hide-sm">Favorito</span></button>
       </div>
     </header>
 
     <section class="promptLayout">
+      <!-- Editor -->
       <section class="promptEditor" aria-label="Prompt editable">
         <div class="promptTitle" id="pTitle">—</div>
-        <div class="promptMeta" id="pMeta">—</div>
-
+        <div class="promptMeta" id="pMeta"></div>
         <textarea class="promptTextarea" id="pText" spellcheck="false"></textarea>
-
         <div class="promptActions">
-          <button class="btn btn--primary" id="btnCopy" type="button">Copiar prompt</button>
-          <button class="btn" id="btnCopyPlain" type="button">Copiar (fallback)</button>
+          <button class="btn btn--primary" id="btnCopy" type="button">📋 Copiar prompt</button>
+          <button class="btn" id="btnReset" type="button">↩️ Restaurar original</button>
         </div>
       </section>
 
+      <!-- Sidebar -->
       <aside class="promptInfo" aria-label="Información">
+        <div class="infoBlock">
+          <div class="k">Compatible con</div>
+          <div class="compat-list" id="pCompat"></div>
+        </div>
+
         <div class="infoBlock">
           <div class="k">Variables</div>
           <div class="vars" id="pVars"></div>
@@ -142,7 +1012,7 @@
 
         <div class="infoBlock">
           <div class="k">Formato de salida</div>
-          <div class="v muted" id="pOut">—</div>
+          <div class="v" id="pOut">—</div>
         </div>
 
         <div class="infoBlock">
@@ -151,7 +1021,7 @@
         </div>
 
         <details class="tcrei">
-          <summary>¿Qué es TCREI?</summary>
+          <summary>Metodología TCREI</summary>
           <div class="tcrei__body">
             <div><strong>T — Tarea:</strong> qué necesitas y para qué.</div>
             <div><strong>C — Contexto:</strong> audiencia, país, canal, limitaciones.</div>
@@ -164,8 +1034,467 @@
     </section>
   </main>
 
+  <!-- Toast -->
   <div class="toast" id="toast" aria-live="polite" aria-atomic="true"></div>
 
-  <script src="./app.js"></script>
+  <!-- ══════ APP JS ══════ -->
+  <script>
+  (function() {
+    'use strict';
+
+    // ─── State ───────────────────────────
+    let PROMPTS = [];
+    let FAVORITES = JSON.parse(localStorage.getItem('cplib_favs') || '[]');
+    let activeCategory = null;
+    let activeFilters = { categories: [], levels: [], tags: [] };
+    let currentPrompt = null;
+    let originalPromptText = '';
+
+    // ─── DOM refs ────────────────────────
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => document.querySelectorAll(s);
+    const qInput = $('#q');
+    const btnClear = $('#btnClear');
+    const grid = $('#grid');
+    const badgeState = $('#badgeState');
+    const countState = $('#countState');
+    const sortSelect = $('#sort');
+    const pageList = $('#pageList');
+    const pagePrompt = $('#pagePrompt');
+    const toastEl = $('#toast');
+
+    // ─── Theme ───────────────────────────
+    const theme = localStorage.getItem('cplib_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    updateThemeBtn();
+
+    $('#btnTheme').addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('cplib_theme', next);
+      updateThemeBtn();
+    });
+
+    function updateThemeBtn() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      $('#btnTheme').innerHTML = isDark
+        ? '☀️ <span class="hide-sm">Claro</span>'
+        : '🌙 <span class="hide-sm">Oscuro</span>';
+    }
+
+    // ─── Load Data ───────────────────────
+    async function loadData() {
+      grid.innerHTML = '<div class="empty"><div class="empty__icon">⏳</div><div class="empty__title">Cargando prompts…</div></div>';
+      try {
+        const res = await fetch('./prompts.json');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        PROMPTS = await res.json();
+        initApp();
+      } catch (err) {
+        grid.innerHTML = `
+          <div class="empty">
+            <div class="empty__icon">📂</div>
+            <div class="empty__title">No se encontró prompts.json</div>
+            <div class="empty__sub">Asegúrate de que el archivo exista en la raíz del repositorio.</div>
+          </div>`;
+        console.error('Error loading prompts.json:', err);
+      }
+    }
+
+    function initApp() {
+      // Stats
+      const cats = [...new Set(PROMPTS.map(p => p.category))];
+      $('#statTotal').textContent = PROMPTS.length;
+      $('#statCats').textContent = cats.length;
+      updateFavCount();
+
+      // Build filter panels
+      buildFilterPanel('filterCategories', cats, 'categories');
+      buildFilterPanel('filterLevels', [...new Set(PROMPTS.map(p => p.level))], 'levels');
+      const allTags = [...new Set(PROMPTS.flatMap(p => p.tags || []))].sort();
+      buildFilterPanel('filterTags', allTags, 'tags');
+
+      render();
+    }
+
+    // ─── Filter panels ───────────────────
+    function buildFilterPanel(containerId, items, filterKey) {
+      const container = $(`#${containerId}`);
+      container.innerHTML = items.map(item => `
+        <label class="filter__option">
+          <input type="checkbox" value="${item}" data-filter-key="${filterKey}">
+          ${item}
+        </label>
+      `).join('');
+
+      container.addEventListener('change', (e) => {
+        const val = e.target.value;
+        const key = e.target.dataset.filterKey;
+        if (e.target.checked) {
+          activeFilters[key].push(val);
+        } else {
+          activeFilters[key] = activeFilters[key].filter(v => v !== val);
+        }
+        e.target.closest('.filter__option').classList.toggle('checked', e.target.checked);
+        render();
+      });
+    }
+
+    // ─── Search ──────────────────────────
+    function normalizeStr(s) {
+      return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    }
+
+    function searchScore(prompt, query) {
+      if (!query) return 1;
+      const q = normalizeStr(query);
+      const words = q.split(/\s+/).filter(Boolean);
+      let score = 0;
+
+      const title = normalizeStr(prompt.title);
+      const cat = normalizeStr(prompt.category);
+      const tags = (prompt.tags || []).map(normalizeStr);
+      const text = normalizeStr(prompt.prompt || '');
+
+      for (const w of words) {
+        if (title.includes(w)) score += 10;
+        if (title.startsWith(w)) score += 5;
+        if (cat.includes(w)) score += 6;
+        if (tags.some(t => t.includes(w))) score += 8;
+        if (text.includes(w)) score += 2;
+      }
+
+      // Bonus for exact phrase match in title
+      if (title.includes(q)) score += 15;
+
+      return score;
+    }
+
+    // ─── Render Grid ─────────────────────
+    function render() {
+      const query = qInput.value.trim();
+      let results = PROMPTS.map(p => ({ ...p, _score: searchScore(p, query) }));
+
+      // Filter by search
+      if (query) {
+        results = results.filter(p => p._score > 0);
+      }
+
+      // Filter by active chip category
+      if (activeCategory && activeCategory !== 'all') {
+        results = results.filter(p => p.category === activeCategory);
+      }
+
+      // Filter by dropdowns
+      if (activeFilters.categories.length) {
+        results = results.filter(p => activeFilters.categories.includes(p.category));
+      }
+      if (activeFilters.levels.length) {
+        results = results.filter(p => activeFilters.levels.includes(p.level));
+      }
+      if (activeFilters.tags.length) {
+        results = results.filter(p => (p.tags || []).some(t => activeFilters.tags.includes(t)));
+      }
+
+      // Filter favorites
+      const showFavs = $('#btnFavorites').classList.contains('active');
+      if (showFavs) {
+        results = results.filter(p => FAVORITES.includes(p.id));
+      }
+
+      // Sort
+      const sortVal = sortSelect.value;
+      if (sortVal === 'relevance' && query) {
+        results.sort((a, b) => b._score - a._score);
+      } else if (sortVal === 'title_asc') {
+        results.sort((a, b) => a.title.localeCompare(b.title, 'es'));
+      } else if (sortVal === 'title_desc') {
+        results.sort((a, b) => b.title.localeCompare(a.title, 'es'));
+      } else if (sortVal === 'newest') {
+        results.sort((a, b) => (b.created || '').localeCompare(a.created || ''));
+      }
+
+      // Update state indicators
+      const activeChips = [];
+      if (query) activeChips.push(`"${query}"`);
+      if (activeCategory && activeCategory !== 'all') activeChips.push(activeCategory);
+      if (activeFilters.categories.length) activeChips.push(...activeFilters.categories);
+      if (activeFilters.levels.length) activeChips.push(...activeFilters.levels);
+      if (showFavs) activeChips.push('Favoritos');
+
+      badgeState.textContent = activeChips.length > 0 ? activeChips.join(' · ') : 'Todos los prompts';
+      countState.textContent = `${results.length} de ${PROMPTS.length}`;
+
+      // Render cards
+      if (results.length === 0) {
+        grid.innerHTML = `
+          <div class="empty">
+            <div class="empty__icon">🔍</div>
+            <div class="empty__title">Sin resultados</div>
+            <div class="empty__sub">Intenta con otros términos o limpia los filtros.</div>
+          </div>`;
+        return;
+      }
+
+      grid.innerHTML = results.map(p => {
+        const levelClass = normalizeStr(p.level).replace('á','a').replace('é','e');
+        const isFav = FAVORITES.includes(p.id);
+        const preview = (p.prompt || '').substring(0, 120).replace(/\n/g, ' ') + '…';
+        const compatDots = (p.compatible || []).map(c => {
+          const name = c.charAt(0).toUpperCase() + c.slice(1);
+          return `<span class="compat-dot" title="${name}"></span>`;
+        }).join('');
+
+        return `
+        <article class="card" data-id="${p.id}" tabindex="0">
+          <button class="card__fav ${isFav ? 'is-fav' : ''}" data-fav="${p.id}" aria-label="Favorito" onclick="event.stopPropagation()">
+            ${isFav ? '⭐' : '☆'}
+          </button>
+          <div class="card__top">
+            <span class="card__cat">${p.category}</span>
+            <span class="card__level card__level--${levelClass}">
+              <span class="card__dot card__dot--${levelClass}"></span>
+              ${p.level}
+            </span>
+          </div>
+          <div class="card__title">${highlightMatch(p.title, qInput.value.trim())}</div>
+          <div class="card__preview">${preview}</div>
+          <div class="card__bottom">
+            <div class="card__tags">
+              ${(p.tags || []).slice(0, 3).map(t => `<span class="card__tag">${t}</span>`).join('')}
+            </div>
+            <div class="card__compat">${compatDots}</div>
+          </div>
+        </article>`;
+      }).join('');
+
+      // Card click handlers
+      grid.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', () => openPrompt(card.dataset.id));
+        card.addEventListener('keydown', (e) => { if (e.key === 'Enter') openPrompt(card.dataset.id); });
+      });
+
+      // Fav button handlers
+      grid.querySelectorAll('[data-fav]').forEach(btn => {
+        btn.addEventListener('click', () => toggleFav(btn.dataset.fav));
+      });
+    }
+
+    function highlightMatch(text, query) {
+      if (!query) return text;
+      const q = normalizeStr(query);
+      const idx = normalizeStr(text).indexOf(q);
+      if (idx === -1) return text;
+      return text.substring(0, idx) +
+        '<mark style="background:var(--brand-soft);color:var(--brand);border-radius:2px;padding:0 2px;">' +
+        text.substring(idx, idx + query.length) +
+        '</mark>' +
+        text.substring(idx + query.length);
+    }
+
+    // ─── Prompt Detail ───────────────────
+    function openPrompt(id) {
+      const p = PROMPTS.find(pr => pr.id === id);
+      if (!p) return;
+      currentPrompt = p;
+      originalPromptText = p.prompt || '';
+
+      pageList.classList.add('page--hidden');
+      pagePrompt.classList.remove('page--hidden');
+      window.scrollTo(0, 0);
+
+      $('#pTitle').textContent = p.title;
+
+      // Meta
+      const levelClass = normalizeStr(p.level).replace('á','a').replace('é','e');
+      $('#pMeta').innerHTML = `
+        <span class="promptMeta__item"><span class="card__level card__level--${levelClass}"><span class="card__dot card__dot--${levelClass}"></span> ${p.level}</span></span>
+        <span class="promptMeta__item" style="color:var(--brand);font-weight:600">${p.category}</span>
+        <span class="promptMeta__item">${p.output_format || '—'}</span>
+      `;
+
+      // Textarea
+      $('#pText').value = p.prompt || '';
+
+      // Compatibility
+      const compatMap = { gemini: 'Gemini', claude: 'Claude', chatgpt: 'ChatGPT' };
+      $('#pCompat').innerHTML = (p.compatible || []).map(c => `
+        <span class="compat-badge compat-badge--${c}">
+          <span class="compat-badge__dot"></span> ${compatMap[c] || c}
+        </span>
+      `).join('');
+
+      // Variables
+      $('#pVars').innerHTML = (p.variables || []).length > 0
+        ? p.variables.map(v => `<span class="var-chip">${v}</span>`).join('')
+        : '<span class="muted">Sin variables</span>';
+
+      // Output
+      $('#pOut').textContent = p.output_format || '—';
+
+      // Tags
+      $('#pTags').innerHTML = (p.tags || []).map(t => `<span class="tag-item">${t}</span>`).join('');
+
+      // Fav toggle
+      updateFavToggle(id);
+
+      // Save to recents
+      saveRecent(id);
+    }
+
+    function closePrompt() {
+      pagePrompt.classList.add('page--hidden');
+      pageList.classList.remove('page--hidden');
+      currentPrompt = null;
+    }
+
+    // ─── Favorites ───────────────────────
+    function toggleFav(id) {
+      const idx = FAVORITES.indexOf(id);
+      if (idx > -1) {
+        FAVORITES.splice(idx, 1);
+        toast('Eliminado de favoritos');
+      } else {
+        FAVORITES.push(id);
+        toast('Guardado en favoritos ⭐');
+      }
+      localStorage.setItem('cplib_favs', JSON.stringify(FAVORITES));
+      updateFavCount();
+      if (currentPrompt) updateFavToggle(id);
+      render();
+    }
+
+    function updateFavToggle(id) {
+      const isFav = FAVORITES.includes(id);
+      const btn = $('#btnFavToggle');
+      btn.innerHTML = isFav
+        ? '⭐ <span class="hide-sm">Favorito</span>'
+        : '☆ <span class="hide-sm">Favorito</span>';
+      btn.classList.toggle('active', isFav);
+    }
+
+    function updateFavCount() {
+      $('#statFavs').textContent = FAVORITES.length;
+    }
+
+    // ─── Recents ─────────────────────────
+    function saveRecent(id) {
+      let recents = JSON.parse(localStorage.getItem('cplib_recents') || '[]');
+      recents = recents.filter(r => r !== id);
+      recents.unshift(id);
+      recents = recents.slice(0, 10);
+      localStorage.setItem('cplib_recents', JSON.stringify(recents));
+    }
+
+    // ─── Toast ───────────────────────────
+    function toast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      clearTimeout(toastEl._timeout);
+      toastEl._timeout = setTimeout(() => toastEl.classList.remove('show'), 2200);
+    }
+
+    // ─── Copy ────────────────────────────
+    async function copyPrompt() {
+      const text = $('#pText').value;
+      try {
+        await navigator.clipboard.writeText(text);
+        toast('Prompt copiado al portapapeles ✓');
+      } catch {
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        toast('Prompt copiado (fallback) ✓');
+      }
+    }
+
+    // ─── Event Listeners ─────────────────
+    // Search
+    qInput.addEventListener('input', () => {
+      btnClear.classList.toggle('visible', qInput.value.length > 0);
+      render();
+    });
+    btnClear.addEventListener('click', () => {
+      qInput.value = '';
+      btnClear.classList.remove('visible');
+      qInput.focus();
+      render();
+    });
+
+    // Chips
+    $$('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const cat = chip.dataset.cat;
+        // Toggle active
+        $$('.chip').forEach(c => c.classList.remove('active'));
+        if (activeCategory === cat) {
+          activeCategory = null;
+        } else {
+          activeCategory = cat;
+          chip.classList.add('active');
+        }
+        render();
+      });
+    });
+
+    // Sort
+    sortSelect.addEventListener('change', render);
+
+    // Reset filters
+    $('#btnResetFilters').addEventListener('click', () => {
+      activeFilters = { categories: [], levels: [], tags: [] };
+      activeCategory = null;
+      qInput.value = '';
+      btnClear.classList.remove('visible');
+      $$('.chip').forEach(c => c.classList.remove('active'));
+      $$('.filter__option input').forEach(cb => { cb.checked = false; });
+      $$('.filter__option').forEach(opt => opt.classList.remove('checked'));
+      // Close filter details
+      $$('.filter').forEach(d => d.removeAttribute('open'));
+      render();
+    });
+
+    // Favorites toggle
+    $('#btnFavorites').addEventListener('click', () => {
+      $('#btnFavorites').classList.toggle('active');
+      render();
+    });
+
+    // Detail page
+    $('#btnBack').addEventListener('click', closePrompt);
+    $('#btnCopy').addEventListener('click', copyPrompt);
+    $('#btnReset').addEventListener('click', () => {
+      if (currentPrompt) {
+        $('#pText').value = originalPromptText;
+        toast('Prompt restaurado');
+      }
+    });
+    $('#btnFavToggle').addEventListener('click', () => {
+      if (currentPrompt) toggleFav(currentPrompt.id);
+    });
+
+    // Keyboard shortcut: Escape to go back
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && currentPrompt) closePrompt();
+    });
+
+    // Close filter dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+      $$('.filter').forEach(d => {
+        if (!d.contains(e.target)) d.removeAttribute('open');
+      });
+    });
+
+    // ─── Init ────────────────────────────
+    loadData();
+
+  })();
+  </script>
 </body>
 </html>
