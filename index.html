@@ -75,7 +75,9 @@
     .nav-item.on::before{content:'';width:3px;height:16px;background:var(--brand);border-radius:2px;margin-left:-2px;margin-right:calc(.5rem - 3px)}
     .nav-item svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
     .side__div{height:1px;background:var(--line);margin:.5rem .625rem}
-    @media(max-width:768px){.side{transform:translateX(-100%)}.side.open{transform:translateX(0)}}
+    @media(max-width:768px){.side{transform:translateX(-100%);z-index:110}.side.open{transform:translateX(0)}}
+    .side-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:105}
+    .side-overlay.on{display:block}
 
     /* ── MAIN ── */
     .shell{margin-left:var(--side-w);padding-top:48px;min-height:100vh;transition:margin .2s}
@@ -291,8 +293,8 @@
 
 <!-- ═══ TOPBAR ═══ -->
 <header class="top">
+  <button class="burger" id="burger" type="button"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
   <a class="top__brand" href="./">
-    <button class="burger" id="burger" type="button"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
     <img class="top__logo" src="./connect-logo.png" alt="Connect"/>
     <span class="top__sep"></span>
     <span class="top__name"><em>AI</em> Portal</span>
@@ -338,8 +340,7 @@
     <button class="nav-item" data-v="help"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Help</button>
   </div>
 </nav>
-
-<!-- ═══ CONTENT ═══ -->
+<div class="side-overlay" id="sideOverlay"></div>
 <div class="shell" id="shell">
 
   <!-- HOME -->
@@ -826,11 +827,12 @@ window.nav=function(v){
   const el=$('#v-'+v);if(el)el.classList.add('on');
   $$('.nav-item').forEach(n=>{n.classList.toggle('on',n.dataset.v===v);});
   window.scrollTo(0,0);if(v==='prompts'&&DATA.length)renderPL();
-  $('#side').classList.remove('open');
+  $('#side').classList.remove('open');$('#sideOverlay').classList.remove('on');
   history.replaceState(null,'','#'+v);
 };
 $$('.nav-item').forEach(n=>n.onclick=()=>nav(n.dataset.v));
-$('#burger').onclick=()=>$('#side').classList.toggle('open');
+$('#burger').onclick=e=>{e.preventDefault();e.stopPropagation();const s=$('#side'),o=$('#sideOverlay');s.classList.toggle('open');o.classList.toggle('on',s.classList.contains('open'));};
+$('#sideOverlay').onclick=()=>{$('#side').classList.remove('open');$('#sideOverlay').classList.remove('on');};
 // Hash routing
 window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(h)nav(h);});
 if(location.hash.length>1)setTimeout(()=>nav(location.hash.slice(1)),50);
