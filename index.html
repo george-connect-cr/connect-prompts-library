@@ -213,6 +213,39 @@
     .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(120%);background:var(--ink);color:var(--bg);padding:.55rem 1.15rem;border-radius:var(--r2);font-size:.8rem;font-weight:600;box-shadow:0 12px 40px rgba(0,0,0,.2);z-index:300;opacity:0;transition:all .25s cubic-bezier(.34,1.56,.64,1);pointer-events:none}
     .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+    /* ── KAI ── */
+    .kai-modes{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+    @media(max-width:800px){.kai-modes{grid-template-columns:1fr}}
+    .kai-card{background:var(--s1);border:1px solid var(--line);border-radius:var(--r3);overflow:hidden;display:flex;flex-direction:column;position:relative;transition:box-shadow .15s}
+    .kai-card:hover{box-shadow:var(--shadow-h)}
+    .kai-card__badge{position:absolute;top:.875rem;right:.875rem;font-size:.575rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:.15rem .5rem;border-radius:100px;z-index:2}
+    .kai-card__badge--chat{background:#4285F415;color:#4285F4}
+    .kai-card__badge--voice{background:#1A875415;color:#1A8754}
+    .kai-card__visual{display:flex;align-items:center;justify-content:center;padding:2rem 1.5rem 1.25rem;background:var(--s2)}
+    .kai-card__body{padding:1.25rem 1.5rem;display:flex;flex-direction:column;gap:.5rem}
+    .kai-card__h{font-size:1rem;font-weight:900;color:var(--ink);letter-spacing:-.01em}
+    .kai-card__p{font-size:.8rem;color:var(--ink3);line-height:1.55}
+
+    .kai-ava{display:flex;flex-direction:column;align-items:center;gap:.375rem}
+    .kai-ava__ring{width:72px;height:72px;border-radius:18px;overflow:hidden;box-shadow:0 4px 16px rgba(232,85,58,.2)}
+    .kai-ava__logo{width:100%;height:100%}
+    .kai-ava__name{font-size:1.1rem;font-weight:900;color:var(--ink);letter-spacing:.02em}
+    .kai-ava__sub{font-size:.7rem;color:var(--ink4);font-weight:500}
+
+    .kai-voice{display:flex;flex-direction:column;align-items:center;gap:.375rem}
+    .kai-voice__knob{width:72px;height:72px;border-radius:50%;background:linear-gradient(145deg,#e0e0e0,#a0a0a0);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 4px 16px rgba(0,0,0,.15)}
+    [data-t="dark"] .kai-voice__knob{background:linear-gradient(145deg,#555,#333)}
+    .kai-voice__ring--outer{position:absolute;inset:-6px;border:2px solid var(--line);border-radius:50%}
+    .kai-voice__ring--inner{position:absolute;inset:4px;border:1.5px solid rgba(255,255,255,.25);border-radius:50%}
+    .kai-voice__letter{font-size:1.5rem;font-weight:900;color:#fff;position:relative;z-index:1;text-shadow:0 1px 3px rgba(0,0,0,.3)}
+    .kai-voice__mic,.kai-voice__speaker{width:36px;height:36px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.95rem}
+    .kai-voice__mic{background:#1A8754;color:#fff}
+    .kai-voice__speaker{background:var(--s3);color:var(--ink3)}
+
+    .kai-steps{display:flex;flex-direction:column;gap:.375rem;margin-top:.25rem}
+    .kai-step{display:flex;align-items:center;gap:.5rem;font-size:.775rem;color:var(--ink2)}
+    .kai-step__n{width:20px;height:20px;border-radius:50%;background:var(--brand-dim);color:var(--brand-t);font-size:.6rem;font-weight:900;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+
     .burger{display:none;background:none;border:none;padding:.3rem;color:var(--ink3)}
     .burger svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round}
     @media(max-width:768px){.burger{display:flex}}
@@ -286,7 +319,7 @@
 <nav class="side" id="side">
   <div class="side__grp">
     <button class="nav-item on" data-v="home"><svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4"/></svg>Home</button>
-    <button class="nav-item" data-v="events"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Events</button>
+    <button class="nav-item" data-v="kai"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8" fill="none"/><path d="M12 2a10 10 0 0110 10"/><path d="M12 2a10 10 0 00-10 10"/></svg>KAI</button>
     <button class="nav-item" data-v="prompts"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Prompt Library</button>
     <button class="nav-item" data-v="whats-new"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>What's New</button>
   </div>
@@ -356,7 +389,115 @@
   </div>
 
   <!-- OTHER VIEWS -->
-  <div class="view" id="v-events"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Próximos eventos</div><div class="hero-banner__h">Events</div><div class="hero-banner__p">Workshops, demos y sesiones de entrenamiento en IA para todo Connect.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">📅</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">Los eventos de IA de Connect se mostrarán aquí.</div></div></div></div>
+  <!-- KAI -->
+  <div class="view" id="v-kai">
+    <div class="hero-banner" style="background:linear-gradient(135deg,#E8553A 0%,#F0845C 35%,#FFB088 100%)">
+      <div class="hero-banner__sub">Knowledge Assistant Interface</div>
+      <div class="hero-banner__h">KAI</div>
+      <div class="hero-banner__p">El asistente de IA interno de Connect. Una app instalada en Google Chat para consultas de texto y disponible en modo Voice para interacción por voz.</div>
+    </div>
+
+    <!-- KAI Modes -->
+    <section class="sec">
+      <div class="sec__h">Cómo usar KAI</div>
+      <div class="kai-modes">
+
+        <!-- Chat Mode -->
+        <div class="kai-card">
+          <div class="kai-card__badge kai-card__badge--chat">Chat</div>
+          <div class="kai-card__visual">
+            <div class="kai-ava">
+              <div class="kai-ava__ring">
+                <svg class="kai-ava__logo" viewBox="0 0 80 80" fill="none">
+                  <rect width="80" height="80" rx="18" fill="#E8553A"/>
+                  <circle cx="40" cy="40" r="20" stroke="#fff" stroke-width="3.5" fill="none"/>
+                  <circle cx="40" cy="40" r="8" stroke="#fff" stroke-width="3" fill="none"/>
+                  <circle cx="40" cy="48" r="4" fill="#fff"/>
+                </svg>
+              </div>
+              <div class="kai-ava__name">KAI</div>
+              <div class="kai-ava__sub">App de Google Chat</div>
+            </div>
+          </div>
+          <div class="kai-card__body">
+            <div class="kai-card__h">KAI en Google Chat</div>
+            <div class="kai-card__p">KAI es una app interna instalada en Google Chat. Escríbele directamente como a cualquier chat y pregunta sobre procesos, políticas, herramientas o cualquier duda operativa de Connect.</div>
+            <div class="kai-steps">
+              <div class="kai-step"><span class="kai-step__n">1</span><span>Abre Google Chat</span></div>
+              <div class="kai-step"><span class="kai-step__n">2</span><span>Busca <strong>KAI</strong> en apps</span></div>
+              <div class="kai-step"><span class="kai-step__n">3</span><span>Escribe tu pregunta</span></div>
+            </div>
+            <a class="btn btn--copy" href="https://chat.google.com" target="_blank" style="text-decoration:none;display:inline-flex;margin-top:.5rem">Abrir Google Chat</a>
+          </div>
+        </div>
+
+        <!-- Voice Mode -->
+        <div class="kai-card">
+          <div class="kai-card__badge kai-card__badge--voice">Voice</div>
+          <div class="kai-card__visual">
+            <div class="kai-voice">
+              <div class="kai-voice__knob">
+                <div class="kai-voice__ring kai-voice__ring--outer"></div>
+                <div class="kai-voice__ring kai-voice__ring--inner"></div>
+                <div class="kai-voice__letter">K</div>
+              </div>
+              <div class="kai-ava__name">KAI</div>
+              <div class="kai-ava__sub">Asistente de Connect</div>
+            </div>
+          </div>
+          <div class="kai-card__body">
+            <div class="kai-card__h">KAI Voice</div>
+            <div class="kai-card__p">Interactúa con KAI por voz. Ideal para consultas rápidas, onboarding de nuevos empleados y acceso manos libres a la información de Connect.</div>
+            <div class="kai-steps">
+              <div class="kai-step"><span class="kai-step__n">1</span><span>Accede a la app de KAI Voice</span></div>
+              <div class="kai-step"><span class="kai-step__n">2</span><span>Presiona el micrófono</span></div>
+              <div class="kai-step"><span class="kai-step__n">3</span><span>Habla tu pregunta</span></div>
+            </div>
+            <div class="kai-voice__btns" style="display:flex;gap:.375rem;margin-top:.5rem">
+              <span class="kai-voice__mic">🎤</span>
+              <span class="kai-voice__speaker">🔊</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What can KAI do -->
+    <section class="sec" style="padding-top:0">
+      <div class="sec__h">¿Qué puede hacer KAI?</div>
+      <div class="content-grid">
+        <div class="cc"><div class="cc__ico cc__ico--brand">?</div><div class="cc__h">Consultas operativas</div><div class="cc__p">Procesos internos, políticas de la empresa, información de productos y servicios de asistencia.</div></div>
+        <div class="cc"><div class="cc__ico cc__ico--cyan">📋</div><div class="cc__h">Onboarding</div><div class="cc__p">Guía a nuevos empleados paso a paso sobre herramientas, accesos y procedimientos iniciales.</div></div>
+        <div class="cc"><div class="cc__ico cc__ico--brand">⚡</div><div class="cc__h">Soporte IT rápido</div><div class="cc__p">Resuelve dudas técnicas frecuentes: VPN, accesos, configuración de herramientas, contraseñas.</div></div>
+        <div class="cc"><div class="cc__ico cc__ico--cyan">📊</div><div class="cc__h">Datos y reportes</div><div class="cc__p">Consulta métricas, KPIs y datos operativos en lenguaje natural sin necesidad de dashboards.</div></div>
+      </div>
+    </section>
+
+    <!-- Tips -->
+    <section class="sec" style="padding-top:0">
+      <div class="sec__h">Tips para mejores respuestas</div>
+      <div class="bp-grid">
+        <div class="bp">
+          <div class="bp__h"><span class="bp__num">1</span> Sé específico</div>
+          <div class="bp__p">Entre más contexto le des a KAI, mejor será la respuesta. Incluye el área, proceso o situación concreta.</div>
+          <div class="bp__do">"¿Cuál es el proceso de escalamiento para asistencia vial en Costa Rica?"</div>
+          <div class="bp__dont">"¿Cómo funciona el proceso?"</div>
+        </div>
+        <div class="bp">
+          <div class="bp__h"><span class="bp__num">2</span> Una pregunta a la vez</div>
+          <div class="bp__p">KAI responde mejor cuando cada mensaje tiene un solo tema. Si tienes varias dudas, envíalas por separado.</div>
+          <div class="bp__do">"¿Qué documentos necesito para registrar un proveedor nuevo?"</div>
+          <div class="bp__dont">"¿Cómo registro un proveedor y también dónde veo las facturas pendientes?"</div>
+        </div>
+        <div class="bp">
+          <div class="bp__h"><span class="bp__num">3</span> No compartas datos sensibles</div>
+          <div class="bp__p">Aunque KAI es interno, evita compartir contraseñas, números de tarjeta o datos PII de clientes directamente.</div>
+          <div class="bp__do">Pregunta sobre procesos y políticas generales</div>
+          <div class="bp__dont">No pegues bases de datos o información confidencial de clientes</div>
+        </div>
+      </div>
+    </section>
+  </div>
   <div class="view" id="v-whats-new"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Actualizaciones</div><div class="hero-banner__h">What's New</div><div class="hero-banner__p">Últimas novedades del portal y herramientas de IA en Connect.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">✦</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">Las actualizaciones aparecerán aquí.</div></div></div></div>
   <div class="view" id="v-stories"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Historias internas</div><div class="hero-banner__h">Stories</div><div class="hero-banner__p">Cómo los equipos de Connect están transformando su trabajo con IA.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">📖</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">Las historias de éxito se publicarán aquí.</div></div></div></div>
   <div class="view" id="v-use-cases"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Casos reales</div><div class="hero-banner__h">Use Cases</div><div class="hero-banner__p">Casos de uso de IA por departamento en Connect Assistance.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">◆</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">Los casos de uso se mostrarán aquí.</div></div></div></div>
