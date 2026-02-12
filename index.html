@@ -216,6 +216,42 @@
     .burger{display:none;background:none;border:none;padding:.3rem;color:var(--ink3)}
     .burger svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round}
     @media(max-width:768px){.burger{display:flex}}
+
+    /* ── INTERNAL TABS ── */
+    .tabs{display:flex;gap:0;border-bottom:1px solid var(--line);margin-bottom:1.5rem;padding:0 2rem}
+    .tab{padding:.625rem 1.25rem;background:none;border:none;border-bottom:2px solid transparent;font-size:.85rem;font-weight:600;color:var(--ink3);cursor:pointer;transition:all .12s;white-space:nowrap}
+    .tab:hover{color:var(--ink)}
+    .tab.on{color:var(--brand);border-bottom-color:var(--brand)}
+    .tab-panel{display:none;animation:fadeIn .2s ease}.tab-panel.on{display:block}
+
+    /* ── TOOL CARDS ── */
+    .tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.75rem}
+    .tool{background:var(--s1);border:1px solid var(--line);border-radius:var(--r2);padding:1.25rem;transition:all .15s;display:flex;gap:1rem;align-items:flex-start}
+    .tool:hover{box-shadow:var(--shadow-h);border-color:var(--line2);transform:translateY(-1px)}
+    .tool__ico{width:42px;height:42px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.2rem}
+    .tool__ico--red{background:#DC262610;color:#DC2626}
+    .tool__ico--blue{background:#2563EB10;color:#2563EB}
+    .tool__ico--green{background:#1A875410;color:#1A8754}
+    .tool__ico--amber{background:#D9770610;color:#D97706}
+    .tool__ico--purple{background:#7C3AED10;color:#7C3AED}
+    .tool__ico--cyan{background:var(--cyan-dim);color:var(--cyan)}
+    .tool__body{flex:1;min-width:0}
+    .tool__h{font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:.2rem}
+    .tool__p{font-size:.75rem;color:var(--ink3);line-height:1.5}
+    .tool__link{display:inline-flex;align-items:center;gap:.2rem;font-size:.7rem;font-weight:700;color:var(--brand);text-decoration:none;margin-top:.375rem;transition:gap .12s}
+    .tool__link:hover{gap:.4rem}
+
+    /* ── BEST PRACTICES ── */
+    .bp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:.75rem}
+    .bp{background:var(--s1);border:1px solid var(--line);border-radius:var(--r2);padding:1.25rem;display:flex;flex-direction:column;gap:.5rem}
+    .bp__num{width:28px;height:28px;border-radius:50%;background:var(--brand);color:#fff;font-size:.7rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .bp__h{font-size:.9rem;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:.5rem}
+    .bp__p{font-size:.775rem;color:var(--ink3);line-height:1.6}
+    .bp__tag{display:inline-flex;padding:.15rem .5rem;background:var(--s2);border-radius:100px;font-size:.6rem;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.04em;width:fit-content}
+    .bp__do{font-size:.75rem;color:#1A8754;font-weight:600;padding-left:.75rem;position:relative;margin-top:.125rem}
+    .bp__do::before{content:'✓';position:absolute;left:0;font-size:.65rem}
+    .bp__dont{font-size:.75rem;color:#DC2626;font-weight:600;padding-left:.75rem;position:relative;margin-top:.125rem}
+    .bp__dont::before{content:'✕';position:absolute;left:0;font-size:.65rem}
   </style>
 </head>
 <body>
@@ -264,6 +300,7 @@
   <div class="side__div"></div>
   <div class="side__grp">
     <div class="side__label">Recursos</div>
+    <button class="nav-item" data-v="cybersec"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Ciberseguridad</button>
     <button class="nav-item" data-v="education"><svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>Education</button>
     <button class="nav-item" data-v="help"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Help</button>
   </div>
@@ -326,6 +363,173 @@
   <div class="view" id="v-champions"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Programa interno</div><div class="hero-banner__h">Champions</div><div class="hero-banner__p">Lidera la adopción de IA en tu equipo. Comparte workflows e impulsa la innovación.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">★</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">El programa de Champions está en desarrollo.</div></div></div></div>
   <div class="view" id="v-education"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Aprende</div><div class="hero-banner__h">Education</div><div class="hero-banner__p">Recursos, guías y cursos para dominar la IA en tu trabajo diario.</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">▲</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">Contenido educativo se publicará aquí.</div></div></div></div>
   <div class="view" id="v-help"><div class="sec"><div class="hero-banner"><div class="hero-banner__sub">Soporte</div><div class="hero-banner__h">Help</div><div class="hero-banner__p">¿Necesitas ayuda con el portal o las herramientas de IA?</div></div></div><div class="sec"><div class="placeholder"><div class="placeholder__ico">?</div><div class="placeholder__h">Próximamente</div><div class="placeholder__p">FAQs y soporte aparecerán aquí.</div></div></div></div>
+
+  <!-- CIBERSEGURIDAD -->
+  <div class="view" id="v-cybersec">
+    <div class="hero-banner" style="background:linear-gradient(135deg,#1e1d1b 0%,#2e2d2a 40%,#E8553A 100%)">
+      <div class="hero-banner__sub">Seguridad de la información</div>
+      <div class="hero-banner__h">Ciberseguridad</div>
+      <div class="hero-banner__p">Herramientas aprobadas, guías de uso seguro y mejores prácticas para proteger la información de Connect al usar IA y tecnología.</div>
+    </div>
+    <div class="tabs" id="csTabs">
+      <button class="tab on" data-tab="cs-tools">Portal de herramientas</button>
+      <button class="tab" data-tab="cs-bp">Best Practices</button>
+    </div>
+
+    <!-- TAB 1: Portal de herramientas -->
+    <div class="tab-panel on" id="tp-cs-tools">
+      <section class="sec" style="padding-top:0">
+        <div class="sec__h">Herramientas aprobadas</div>
+        <div class="sec__sub" style="font-size:.8rem;color:var(--ink3);margin-bottom:1.25rem">Herramientas verificadas y autorizadas por el equipo de IT y Ciberseguridad de Connect para uso corporativo.</div>
+        <div class="tool-grid">
+          <div class="tool">
+            <div class="tool__ico tool__ico--blue">🛡</div>
+            <div class="tool__body">
+              <div class="tool__h">Google Workspace</div>
+              <div class="tool__p">Suite completa: Gmail, Drive, Docs, Sheets, Meet. Cifrado en tránsito y en reposo. SSO habilitado.</div>
+              <div class="bp__tag" style="margin-top:.375rem">Aprobado</div>
+            </div>
+          </div>
+          <div class="tool">
+            <div class="tool__ico tool__ico--green">✦</div>
+            <div class="tool__body">
+              <div class="tool__h">Google Gemini (Corporativo)</div>
+              <div class="tool__p">IA generativa aprobada para uso interno. No usar datos PII de clientes sin anonimizar. Los prompts no se usan para entrenar modelos.</div>
+              <div class="bp__tag" style="margin-top:.375rem">Aprobado con condiciones</div>
+            </div>
+          </div>
+          <div class="tool">
+            <div class="tool__ico tool__ico--green">⚡</div>
+            <div class="tool__body">
+              <div class="tool__h">Slack</div>
+              <div class="tool__p">Comunicación interna. No compartir contraseñas, tokens o datos sensibles por mensajes directos ni canales.</div>
+              <div class="bp__tag" style="margin-top:.375rem">Aprobado</div>
+            </div>
+          </div>
+          <div class="tool">
+            <div class="tool__ico tool__ico--purple">☁</div>
+            <div class="tool__body">
+              <div class="tool__h">VPN Corporativa</div>
+              <div class="tool__p">Conexión segura obligatoria para acceso remoto a sistemas internos. Siempre activa fuera de la oficina.</div>
+              <div class="bp__tag" style="margin-top:.375rem">Obligatorio remoto</div>
+            </div>
+          </div>
+          <div class="tool">
+            <div class="tool__ico tool__ico--amber">🔐</div>
+            <div class="tool__body">
+              <div class="tool__h">Autenticación MFA</div>
+              <div class="tool__p">Doble factor de autenticación activo en todas las cuentas corporativas. Usa la app de autenticación, no SMS.</div>
+              <div class="bp__tag" style="margin-top:.375rem">Obligatorio</div>
+            </div>
+          </div>
+          <div class="tool">
+            <div class="tool__ico tool__ico--red">⊘</div>
+            <div class="tool__body">
+              <div class="tool__h">Antivirus / EDR</div>
+              <div class="tool__p">Solución endpoint instalada en todos los equipos corporativos. No desactivar ni excluir carpetas sin autorización de IT.</div>
+              <div class="bp__tag" style="margin-top:.375rem">Obligatorio</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sec__h" style="margin-top:2rem">Herramientas restringidas</div>
+        <div class="sec__sub" style="font-size:.8rem;color:var(--ink3);margin-bottom:1.25rem">Herramientas de IA y software que no están autorizadas para uso con datos corporativos de Connect.</div>
+        <div class="tool-grid">
+          <div class="tool" style="border-color:#DC262630">
+            <div class="tool__ico tool__ico--red">✕</div>
+            <div class="tool__body">
+              <div class="tool__h">ChatGPT (cuenta personal)</div>
+              <div class="tool__p">No autorizado para datos corporativos. Los datos ingresados pueden usarse para entrenar modelos. Usar Gemini corporativo en su lugar.</div>
+              <div class="bp__tag" style="margin-top:.375rem;color:#DC2626;background:#DC262610">No autorizado</div>
+            </div>
+          </div>
+          <div class="tool" style="border-color:#DC262630">
+            <div class="tool__ico tool__ico--red">✕</div>
+            <div class="tool__body">
+              <div class="tool__h">IA gratuitas sin acuerdo</div>
+              <div class="tool__p">Herramientas como Copilot personal, Claude free, Perplexity sin licencia corporativa. No ingresar datos de clientes ni información interna.</div>
+              <div class="bp__tag" style="margin-top:.375rem;color:#DC2626;background:#DC262610">No autorizado</div>
+            </div>
+          </div>
+          <div class="tool" style="border-color:#D9770630">
+            <div class="tool__ico tool__ico--amber">⚠</div>
+            <div class="tool__body">
+              <div class="tool__h">USB / almacenamiento externo</div>
+              <div class="tool__p">Dispositivos de almacenamiento externo requieren autorización previa de IT. Riesgo de malware y fuga de datos.</div>
+              <div class="bp__tag" style="margin-top:.375rem;color:#D97706;background:#D9770610">Requiere aprobación</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- TAB 2: Best Practices -->
+    <div class="tab-panel" id="tp-cs-bp">
+      <section class="sec" style="padding-top:0">
+        <div class="sec__h">Best Practices de seguridad</div>
+        <div class="sec__sub" style="font-size:.8rem;color:var(--ink3);margin-bottom:1.25rem">Guías esenciales para proteger la información de Connect y nuestros clientes en el uso diario de tecnología e IA.</div>
+
+        <div class="bp-grid">
+          <div class="bp">
+            <div class="bp__h"><span class="bp__num">1</span> Uso seguro de IA generativa</div>
+            <div class="bp__p">Al usar Gemini u otras herramientas de IA aprobadas, nunca incluyas datos personales identificables (PII) de clientes sin anonimizar. Nombres, cédulas, teléfonos y direcciones deben ser reemplazados por placeholders.</div>
+            <div class="bp__do">Anonimiza: "El cliente [NOMBRE] reportó desde [CIUDAD]"</div>
+            <div class="bp__dont">Nunca: "Juan Pérez, cédula 1-1234-5678, llamó desde Escazú"</div>
+            <div class="bp__tag">IA · Datos</div>
+          </div>
+          <div class="bp">
+            <div class="bp__h"><span class="bp__num">2</span> Contraseñas y accesos</div>
+            <div class="bp__p">Usa contraseñas únicas de mínimo 12 caracteres para cada sistema. Activa MFA en todas las cuentas. Nunca compartas credenciales por Slack, email o chat.</div>
+            <div class="bp__do">Usa un gestor de contraseñas aprobado por IT</div>
+            <div class="bp__dont">Nunca guardes contraseñas en archivos de texto o notas</div>
+            <div class="bp__tag">Accesos</div>
+          </div>
+          <div class="bp">
+            <div class="bp__h"><span class="bp__num">3</span> Phishing y ingeniería social</div>
+            <div class="bp__p">Verifica el remitente antes de hacer click en enlaces o descargar adjuntos. Los ataques de phishing pueden imitar correos internos. Ante la duda, reporta a IT.</div>
+            <div class="bp__do">Verifica la dirección del remitente, no solo el nombre</div>
+            <div class="bp__dont">Nunca ingreses credenciales desde un enlace de email sospechoso</div>
+            <div class="bp__tag">Email · Social</div>
+          </div>
+          <div class="bp">
+            <div class="bp__h"><span class="bp__num">4</span> Clasificación de información</div>
+            <div class="bp__p">Toda información de Connect tiene un nivel de sensibilidad. Datos de clientes, contratos y financieros son confidenciales. No compartir en herramientas no autorizadas.</div>
+            <div class="bp__do">Usa Drive corporativo para documentos sensibles</div>
+            <div class="bp__dont">Nunca subas datos de clientes a servicios gratuitos o personales</div>
+            <div class="bp__tag">Datos · Clasificación</div>
+          </div>
+          <div class="bp">
+            <div class="bp__h"><span class="bp__num">5</span> Trabajo remoto seguro</div>
+            <div class="bp__p">Activa siempre la VPN al trabajar fuera de la oficina. No uses redes WiFi públicas sin VPN. Bloquea tu equipo al alejarte, incluso en casa.</div>
+            <div class="bp__do">VPN + pantalla bloqueada + red confiable</div>
+            <div class="bp__dont">Nunca trabajes desde WiFi público sin protección</div>
+            <div class="bp__tag">Remoto · VPN</div>
+          </div>
+          <div class="bp">
+            <div class="bp__h"><span class="bp__num">6</span> Reporte de incidentes</div>
+            <div class="bp__p">Si sospechas de un incidente de seguridad (acceso no autorizado, malware, fuga de datos), reporta inmediatamente al equipo de IT. No intentes resolverlo solo.</div>
+            <div class="bp__do">Reporta al canal de IT o a tu supervisor inmediato</div>
+            <div class="bp__dont">Nunca ignores un comportamiento sospechoso en tu equipo</div>
+            <div class="bp__tag">Incidentes</div>
+          </div>
+          <div class="bp">
+            <div class="bp__h"><span class="bp__num">7</span> Actualizaciones y parches</div>
+            <div class="bp__p">Mantén tu equipo actualizado. Las actualizaciones de sistema operativo y software corrigen vulnerabilidades críticas. No pospongas reinicios por más de 24h.</div>
+            <div class="bp__do">Acepta las actualizaciones automáticas de IT</div>
+            <div class="bp__dont">Nunca desactives las actualizaciones automáticas</div>
+            <div class="bp__tag">Equipos</div>
+          </div>
+          <div class="bp">
+            <div class="bp__h"><span class="bp__num">8</span> Prompts y datos en IA</div>
+            <div class="bp__p">Al usar la Prompt Library, los prompts están diseñados para no requerir datos confidenciales directos. Si un caso lo requiere, anonimiza antes de pegar en la herramienta de IA.</div>
+            <div class="bp__do">Usa los campos de variables con datos genéricos o anonimizados</div>
+            <div class="bp__dont">Nunca pegues bases de datos completas con PII en una IA</div>
+            <div class="bp__tag">IA · Prompts</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
 </div>
 
 <!-- ═══ MODAL — NEW UX ═══ -->
@@ -491,6 +695,14 @@ window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(h)na
 if(location.hash.length>1)setTimeout(()=>nav(location.hash.slice(1)),50);
 
 $('#globalQ').onkeydown=e=>{if(e.key==='Enter'&&$('#globalQ').value.trim()){nav('prompts');$('#plQ').value=$('#globalQ').value;$('#globalQ').value='';renderPL();}};
+
+// Internal tabs (cybersec)
+document.addEventListener('click',e=>{
+  const tab=e.target.closest('.tab');if(!tab)return;
+  const container=tab.closest('.view');if(!container)return;
+  container.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t===tab));
+  container.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('on',p.id==='tp-'+tab.dataset.tab));
+});
 
 // Load
 async function load(){
