@@ -43,9 +43,12 @@
 
     /* ── TOPBAR ── */
     .top{position:fixed;top:0;left:0;right:0;z-index:100;height:48px;background:var(--s1);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 1.25rem;gap:.75rem}
-    .top__brand{display:flex;align-items:center;gap:.5rem;text-decoration:none;min-width:var(--side-w);flex-shrink:0}
-    .top__logo{height:20px;width:auto}
-    [data-t="dark"] .top__logo{filter:brightness(0) invert(1)}
+    .top__brand{display:flex;align-items:center;gap:.625rem;text-decoration:none;min-width:var(--side-w);flex-shrink:0}
+    .top__logo-wrap{height:32px;padding:4px 10px;background:var(--brand);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .top__logo-wrap img{height:16px;width:auto;filter:brightness(0) invert(1)}
+    .top__logo-text{display:flex;flex-direction:column;line-height:1}
+    .top__logo-text span:first-child{font-size:.575rem;font-weight:900;color:#fff;letter-spacing:.08em;text-transform:uppercase}
+    .top__logo-text span:last-child{font-size:.4rem;color:rgba(255,255,255,.7);letter-spacing:.02em;font-weight:500;font-style:italic}
     .top__sep{width:1px;height:16px;background:var(--line2)}
     .top__name{font-size:.8rem;font-weight:700;color:var(--ink);letter-spacing:.01em}
     .top__name em{font-style:normal;color:var(--brand)}
@@ -295,7 +298,9 @@
 <header class="top">
   <button class="burger" id="burger" type="button"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
   <a class="top__brand" href="./">
-    <img class="top__logo" src="./connect-logo.png" alt="Connect"/>
+    <div class="top__logo-wrap">
+      <img src="./connect-logo.png" alt="Connect"/>
+    </div>
     <span class="top__sep"></span>
     <span class="top__name"><em>AI</em> Portal</span>
   </a>
